@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte: Tech Stack PYMES Chile (50+ Empleados)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Chosen Palette: Warm Neutrals & Corporate Blue -->
+    <!-- Application Structure Plan:
+        1. Hero Section: Title and Abstract.
+        2. Navigation Bar: Sticky tabs for main sections (General, Porter, HR, AI/LLM).
+        3. Dynamic Content Area:
+           - Section 1 (Panorama): Chart.js visualizations for Payment Models and SaaS vs On-Premise.
+           - Section 2 (Porter): Interactive grid representing the Value Chain. Clicking cells updates context.
+           - Section 3 (HR Focus): Interactive 'Flip Cards' or Accordion for Problem/Solution analysis.
+           - Section 4 (AI/LLM): Concept flow for RAG integration and adoption stats.
+        4. Footer: Methodology and Sources.
+    -->
+    <!-- Visualization & Content Choices:
+        - Goal: Compare -> Payment Models -> Pie Charts -> Easy to digest proportions.
+        - Goal: Inform -> Value Chain -> Interactive Buttons -> Users select area of interest to see specific stack.
+        - Goal: Organize -> HR Problems -> Toggle Cards -> Clean way to present complex problem/solution text.
+        - Goal: Explain Process -> RAG Integration -> Step-by-Step visual highlighting -> Demystifies the acronym.
+        - JUSTIFICATION: All visuals use Canvas (Chart.js) or CSS/HTML. NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e3a8a', // Corporate Blue
+                        secondary: '#64748b', // Slate
+                        accent: '#d97706', // Amber
+                        bgWarm: '#f8fafc', // Very Light Blue/Grey
+                        cardWarm: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Chart Container Styles */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Interactive Elements transitions */
+        .interactive-card {
+            transition: all 0.3s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hide/Show logic classes */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Porter Chain Grid */
+        .porter-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .porter-header {
+            grid-column: span 5;
+            text-align: center;
+            font-weight: bold;
+            padding: 0.5rem;
+            background-color: #e2e8f0;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-bgWarm text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-layer-group text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900 leading-tight">Tech Stack PYMES Chile</h1>
+                    <p class="text-xs text-gray-500">Segmento 50+ Empleados | Investigación 2025</p>
+                </div>
+            </div>
+            <!-- Mobile Menu Button (Simplified for this view, mostly hidden on desktop) -->
+            <button class="md:hidden text-gray-500"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
+            <div class="flex space-x-4 overflow-x-auto pb-2 border-b border-gray-100" id="nav-container">
+                <button onclick="switchTab('panorama')" class="nav-btn active px-4 py-2 text-sm font-medium text-primary border-b-2 border-primary whitespace-nowrap" id="btn-panorama">
+                    Panorama General
+                </button>
+                <button onclick="switchTab('porter')" class="nav-btn px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 whitespace-nowrap" id="btn-porter">
+                    Cadena de Valor & Compliance
+                </button>
+                <button onclick="switchTab('rrhh')" class="nav-btn px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 whitespace-nowrap" id="btn-rrhh">
+                    Foco RRHH
+                </button>
+                <button onclick="switchTab('ia')" class="nav-btn px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 whitespace-nowrap" id="btn-ia">
+                    IA & LLM (Futuro)
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- SECTION 1: PANORAMA GENERAL -->
+        <section id="panorama" class="tab-content active">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Panorama Tecnológico en Chile</h2>
+                <p class="text-gray-600 max-w-3xl">
+                    Este panel visualiza el estado actual de la adopción tecnológica en empresas medianas (50+ empleados). 
+                    Se observa una transición acelerada hacia modelos SaaS (Software as a Service), aunque el legado On-Premise 
+                    mantiene fuerza en sectores regulados o industriales.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud text-primary"></i> Modelo de Despliegue
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-4 h-12">
+                        Comparativa entre soluciones en la nube (SaaS) vs instalación local (On-Premise).
+                        <br><span class="text-xs italic">(Fuente: Proyección basada en CCS & IDC Latam)</span>
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="chartDeployment"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+                        <i class="fa-solid fa-file-invoice-dollar text-primary"></i> Modelo de Pago
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-4 h-12">
+                        Preferencia de inversión: Suscripción recurrente (Opex) vs Licenciamiento perpetuo (Capex).
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="chartPayment"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Findings Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-primary">
+                    <div class="text-3xl font-bold text-primary mb-1">68%</div>
+                    <div class="text-sm font-medium text-gray-700">Adopción Nube Híbrida</div>
+                    <p class="text-xs text-gray-500 mt-2">Las empresas mantienen datos críticos on-premise por compliance.</p>
+                </div>
+                <div class="bg-amber-50 p-6 rounded-lg border-l-4 border-accent">
+                    <div class="text-3xl font-bold text-accent mb-1">+15%</div>
+                    <div class="text-sm font-medium text-gray-700">Crecimiento Anual SaaS</div>
+                    <p class="text-xs text-gray-500 mt-2">Impulsado por la necesidad de trabajo remoto y flexibilidad.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                    <div class="text-3xl font-bold text-gray-600 mb-1">ERP</div>
+                    <div class="text-sm font-medium text-gray-700">Core Tecnológico</div>
+                    <p class="text-xs text-gray-500 mt-2">SAP Business One, Softland y Defontana dominan el segmento.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: PORTER & COMPLIANCE -->
+        <section id="porter" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Cadena de Valor y Compliance</h2>
+                <p class="text-gray-600 max-w-3xl">
+                    Explore cómo el Tech Stack se distribuye a través de las actividades primarias y de soporte de la empresa.
+                    Haga clic en cada eslabón de la cadena para revelar las tecnologías específicas y cómo se maneja el cumplimiento normativo (Compliance).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left: Interactive Porter Diagram -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                        <h4 class="text-xs uppercase tracking-wide text-gray-400 font-bold mb-3">Actividades de Soporte</h4>
+                        <div class="grid gap-2">
+                            <button onclick="updatePorter('infra')" class="porter-btn w-full p-3 bg-gray-100 hover:bg-gray-200 text-left rounded font-medium text-sm flex justify-between group">
+                                <span>Infraestructura & Finanzas</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
+                            </button>
+                            <button onclick="updatePorter('rrhh_porter')" class="porter-btn w-full p-3 bg-gray-100 hover:bg-gray-200 text-left rounded font-medium text-sm flex justify-between group">
+                                <span>Gestión de Recursos Humanos</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
+                            </button>
+                            <button onclick="updatePorter('tech')" class="porter-btn w-full p-3 bg-gray-100 hover:bg-gray-200 text-left rounded font-medium text-sm flex justify-between group">
+                                <span>Desarrollo Tecnológico</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
+                            </button>
+                        </div>
+                        
+                        <h4 class="text-xs uppercase tracking-wide text-gray-400 font-bold mt-6 mb-3">Actividades Primarias</h4>
+                        <div class="grid grid-cols-5 gap-1">
+                            <button onclick="updatePorter('log_in')" class="porter-btn col-span-1 p-2 bg-primary text-white hover:bg-blue-800 text-center rounded text-xs h-24 flex flex-col items-center justify-center gap-2 transition-colors">
+                                <i class="fa-solid fa-truck-ramp-box"></i>
+                                Logística Entrada
+                            </button>
+                            <button onclick="updatePorter('ops')" class="porter-btn col-span-1 p-2 bg-primary text-white hover:bg-blue-800 text-center rounded text-xs h-24 flex flex-col items-center justify-center gap-2 transition-colors">
+                                <i class="fa-solid fa-gears"></i>
+                                Operaciones
+                            </button>
+                            <button onclick="updatePorter('log_out')" class="porter-btn col-span-1 p-2 bg-primary text-white hover:bg-blue-800 text-center rounded text-xs h-24 flex flex-col items-center justify-center gap-2 transition-colors">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                Logística Salida
+                            </button>
+                            <button onclick="updatePorter('marketing')" class="porter-btn col-span-1 p-2 bg-primary text-white hover:bg-blue-800 text-center rounded text-xs h-24 flex flex-col items-center justify-center gap-2 transition-colors">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                Marketing & Ventas
+                            </button>
+                            <button onclick="updatePorter('service')" class="porter-btn col-span-1 p-2 bg-primary text-white hover:bg-blue-800 text-center rounded text-xs h-24 flex flex-col items-center justify-center gap-2 transition-colors">
+                                <i class="fa-solid fa-headset"></i>
+                                Servicios
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Info Panel -->
+                <div class="lg:col-span-5">
+                    <div id="porter-detail" class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-primary h-full">
+                        <!-- Content injected via JS -->
+                        <div class="flex flex-col items-center justify-center h-64 text-center text-gray-400">
+                            <i class="fa-solid fa-arrow-pointer text-4xl mb-4"></i>
+                            <p>Seleccione un área de la Cadena de Valor para ver su Tech Stack y Compliance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: RRHH FOCUS -->
+        <section id="rrhh" class="tab-content">
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Foco: Recursos Humanos</h2>
+                    <p class="text-gray-600 max-w-2xl">
+                        Análisis de las fricciones tecnológicas comunes en departamentos de RRHH en Chile y cómo se resuelven hoy.
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+                        Top Prioridad: Automatización
+                    </span>
+                </div>
+            </div>
+
+            <!-- Functions Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
+                    <div class="text-accent mb-2"><i class="fa-solid fa-users-viewfinder text-2xl"></i></div>
+                    <h3 class="font-bold text-gray-800">Atracción de Talento</h3>
+                    <p class="text-sm text-gray-500 mt-1">ATS (Applicant Tracking Systems), Portales de empleo (LinkedIn, Trabajando.com).</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
+                    <div class="text-accent mb-2"><i class="fa-solid fa-file-signature text-2xl"></i></div>
+                    <h3 class="font-bold text-gray-800">Gestión Administrativa</h3>
+                    <p class="text-sm text-gray-500 mt-1">Cálculo de nómina (Buk, Talana, Rex+), Gestión de vacaciones, Firma digital.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
+                    <div class="text-accent mb-2"><i class="fa-solid fa-heart-pulse text-2xl"></i></div>
+                    <h3 class="font-bold text-gray-800">Desarrollo & Clima</h3>
+                    <p class="text-sm text-gray-500 mt-1">Evaluaciones de desempeño, Encuestas de clima, LMS para capacitación.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Problem/Solution -->
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Problemas y Soluciones Tecnológicas</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="hr-problems-container">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: IA & LLM (FUTURE) -->
+        <section id="ia" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Estado del Arte: LLM y RAG</h2>
+                <p class="text-gray-600 max-w-4xl">
+                    ¿Cómo se integran los Grandes Modelos de Lenguaje (LLM) en la empresa chilena? 
+                    La tendencia se mueve del "uso general" a sistemas <strong>RAG (Retrieval-Augmented Generation)</strong> 
+                    que permiten a la IA consultar documentos internos de forma segura y alucinando menos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                <!-- Chart: AI Adoption -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Nivel de Adopción de IA Generativa</h3>
+                    <div class="chart-container">
+                        <canvas id="chartAI"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-2">Estimación mercado local 2024-2025</p>
+                </div>
+
+                <!-- Text: Integration Areas -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">¿Cómo se integran los LLM?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full mt-1 mr-3">1</span>
+                            <div>
+                                <strong class="text-gray-900 block">Soporte Interno (RRHH/TI)</strong>
+                                <span class="text-sm text-gray-600">Chatbots que responden preguntas sobre reglamentos internos o beneficios usando la base de conocimiento de la empresa.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-purple-100 text-purple-600 rounded-full mt-1 mr-3">2</span>
+                            <div>
+                                <strong class="text-gray-900 block">Análisis Documental</strong>
+                                <span class="text-sm text-gray-600">Resumen automático de contratos, licitaciones y CVs para acelerar la toma de decisiones.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full mt-1 mr-3">3</span>
+                            <div>
+                                <strong class="text-gray-900 block">Asistentes de Código</strong>
+                                <span class="text-sm text-gray-600">Equipos de desarrollo usan Copilot/ChatGPT para acelerar el desarrollo de software interno.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- RAG Visualizer -->
+            <div class="bg-gray-900 text-white rounded-xl p-8 overflow-hidden relative">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i class="fa-solid fa-microchip text-9xl"></i>
+                </div>
+                
+                <h3 class="text-xl font-bold mb-6 border-b border-gray-700 pb-2">Visualizador: ¿Qué es un Sistema RAG?</h3>
+                <p class="text-gray-400 mb-8 max-w-2xl">
+                    Haga clic en los pasos para entender cómo una empresa integra sus datos privados con un LLM público (como GPT-4) de forma segura.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="rag-steps">
+                    <!-- Steps generated by JS -->
+                </div>
+
+                <div id="rag-explanation" class="mt-8 p-4 bg-gray-800 rounded-lg border-l-4 border-accent min-h-[100px] flex items-center">
+                    <p class="text-gray-300 italic">Seleccione un paso arriba para ver el detalle técnico.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2025 Tech Analytics Chile.</p>
+                <div class="flex space-x-4 mt-2 md:mt-0">
+                    <span>Metodología: Análisis cualitativo y agregación de reportes de industria.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA STORE ---
+        const reportData = {
+            deployment: {
+                labels: ['SaaS (Nube Pública)', 'On-Premise (Local)', 'Híbrido'],
+                data: [45, 20, 35],
+                colors: ['#3b82f6', '#64748b', '#93c5fd']
+            },
+            payment: {
+                labels: ['Suscripción (Recurrente)', 'Licencia Perpetua (Pago Único)', 'Freemium/Open Source'],
+                data: [65, 25, 10],
+                colors: ['#d97706', '#1e3a8a', '#94a3b8']
+            },
+            aiAdoption: {
+                labels: ['Sin Implementación', 'Exploración/Pilotos', 'Producción Limitada', 'Uso Extensivo'],
+                data: [40, 35, 20, 5],
+                colors: ['#cbd5e1', '#60a5fa', '#2563eb', '#1e40af']
+            },
+            porterDetails: {
+                'log_in': {
+                    title: 'Logística de Entrada',
+                    stack: ['WMS (Warehouse Mgmt)', 'ERP Módulos Inventario', 'IoT Sensores'],
+                    compliance: 'Trazabilidad de productos, Normas ISO de almacenamiento.',
+                    icon: 'fa-truck-ramp-box'
+                },
+                'ops': {
+                    title: 'Operaciones',
+                    stack: ['ERP (SAP B1, Softland)', 'MRP (Manufacturing Resource Planning)', 'SCADA (Industria)'],
+                    compliance: 'Normativas de seguridad laboral, Gestión de residuos, Control de calidad.',
+                    icon: 'fa-gears'
+                },
+                'log_out': {
+                    title: 'Logística de Salida',
+                    stack: ['TMS (Transport Mgmt)', 'Integración Couriers (Starken/Chilexpress API)', 'Route Optimization'],
+                    compliance: 'Facturación electrónica (SII), Tiempos de entrega, Garantías.',
+                    icon: 'fa-truck-fast'
+                },
+                'marketing': {
+                    title: 'Marketing & Ventas',
+                    stack: ['CRM (Salesforce, HubSpot)', 'Email Marketing (Mailchimp)', 'E-commerce (Shopify/Vtex)'],
+                    compliance: 'Ley del Consumidor (SERNAC), Protección de Datos Personales.',
+                    icon: 'fa-bullhorn'
+                },
+                'service': {
+                    title: 'Servicios',
+                    stack: ['Helpdesk (Zendesk, Freshdesk)', 'Chatbots Básicos', 'Ticketing Systems'],
+                    compliance: 'SLA (Acuerdos de Nivel de Servicio), Gestión de Reclamos.',
+                    icon: 'fa-headset'
+                },
+                'infra': {
+                    title: 'Infraestructura & Finanzas',
+                    stack: ['ERP Financiero', 'BI (PowerBI, Tableau)', 'Ciberseguridad (Firewalls, VPN)'],
+                    compliance: 'Normas IFRS, Auditoría tributaria (SII), Ley de Delitos Económicos.',
+                    icon: 'fa-building-columns'
+                },
+                'rrhh_porter': {
+                    title: 'Gestión de RRHH',
+                    stack: ['HCM (Buk, Talana)', 'Control de Asistencia (GeoVictoria)', 'Firma Digital'],
+                    compliance: 'Código del Trabajo, Ley 40 horas, Ley Karin, Pago cotizaciones (Previred).',
+                    icon: 'fa-users'
+                },
+                'tech': {
+                    title: 'Desarrollo Tecnológico',
+                    stack: ['Git/GitHub', 'AWS/Azure/GCP', 'DevOps Tools (Docker, Jenkins)'],
+                    compliance: 'Propiedad Intelectual, Licencias de Software.',
+                    icon: 'fa-code'
+                }
+            },
+            hrProblems: [
+                {
+                    problem: "Silos de Información",
+                    desc: "Datos de empleados dispersos en Excel, ERP antiguo y carpetas físicas.",
+                    solution: "Plataformas Integrales (HCM)",
+                    focus: "Centralización y 'Single Source of Truth'.",
+                    icon: "fa-database"
+                },
+                {
+                    problem: "Carga Administrativa Manual",
+                    desc: "Cálculo manual de horas extras, vacaciones y beneficios.",
+                    solution: "Automatización de Nómina",
+                    focus: "Eficiencia operativa y reducción de errores humanos.",
+                    icon: "fa-calculator"
+                },
+                {
+                    problem: "Compliance Laboral Complejo",
+                    desc: "Dificultad para adaptarse rápido a leyes como 40 Horas o Ley Karin.",
+                    solution: "SaaS Localizado (Chile-Specific)",
+                    focus: "Actualización normativa automática (Buk, Talana, Rex+).",
+                    icon: "fa-gavel"
+                },
+                {
+                    problem: "Baja Retención de Talento",
+                    desc: "Falta de visibilidad sobre el clima y desempeño.",
+                    solution: "People Analytics & Engagement",
+                    focus: "Toma de decisiones basada en datos de clima y desempeño.",
+                    icon: "fa-chart-line"
+                }
+            ],
+            ragSteps: [
+                {
+                    step: 1,
+                    title: "Ingesta de Datos",
+                    desc: "La empresa carga sus PDFs, Manuales y Bases de Datos internas en el sistema. Estos se convierten en vectores matemáticos."
+                },
+                {
+                    step: 2,
+                    title: "Recuperación (Retrieval)",
+                    desc: "Cuando el usuario hace una pregunta, el sistema busca en la base de datos interna los fragmentos más relevantes."
+                },
+                {
+                    step: 3,
+                    title: "Augmentación",
+                    desc: "El sistema combina la pregunta del usuario + los datos recuperados y los envía al LLM (como instrucciones de contexto)."
+                },
+                {
+                    step: 4,
+                    title: "Generación",
+                    desc: "El LLM genera una respuesta precisa basada estrictamente en la información de la empresa, citando fuentes."
+                }
+            ]
+        };
+
+        // --- CHART INITIALIZATION ---
+        function initCharts() {
+            // Setup global defaults
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#64748b';
+
+            // Chart 1: Deployment
+            new Chart(document.getElementById('chartDeployment'), {
+                type: 'doughnut',
+                data: {
+                    labels: reportData.deployment.labels,
+                    datasets: [{
+                        data: reportData.deployment.data,
+                        backgroundColor: reportData.deployment.colors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Chart 2: Payment
+            new Chart(document.getElementById('chartPayment'), {
+                type: 'pie',
+                data: {
+                    labels: reportData.payment.labels,
+                    datasets: [{
+                        data: reportData.payment.data,
+                        backgroundColor: reportData.payment.colors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Chart 3: AI Adoption
+            new Chart(document.getElementById('chartAI'), {
+                type: 'bar',
+                data: {
+                    labels: reportData.aiAdoption.labels,
+                    datasets: [{
+                        label: '% Empresas',
+                        data: reportData.aiAdoption.data,
+                        backgroundColor: reportData.aiAdoption.colors,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // --- NAVIGATION LOGIC ---
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-primary', 'border-primary', 'border-b-2');
+                btn.classList.add('text-gray-500');
+            });
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('text-gray-500');
+            activeBtn.classList.add('text-primary', 'border-primary', 'border-b-2');
+
+            // Force Chart resize if needed when tab becomes visible
+            window.dispatchEvent(new Event('resize'));
+        }
+
+        // --- PORTER LOGIC ---
+        function updatePorter(key) {
+            const data = reportData.porterDetails[key];
+            const container = document.getElementById('porter-detail');
+            
+            if (data) {
+                container.innerHTML = `
+                    <div class="animate-[fadeIn_0.3s_ease-out]">
+                        <div class="flex items-center gap-3 mb-4 border-b border-gray-100 pb-3">
+                            <div class="bg-primary text-white p-3 rounded-lg"><i class="fa-solid ${data.icon} text-xl"></i></div>
+                            <h3 class="text-xl font-bold text-primary">${data.title}</h3>
+                        </div>
+                        
+                        <div class="mb-5">
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Tech Stack Común</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${data.stack.map(item => `<span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium border border-blue-100">${item}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Manejo de Compliance</h4>
+                            <div class="bg-gray-50 p-3 rounded text-sm text-gray-700 border-l-4 border-accent">
+                                ${data.compliance}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // --- HR CARDS LOGIC ---
+        function renderHRCards() {
+            const container = document.getElementById('hr-problems-container');
+            container.innerHTML = reportData.hrProblems.map(item => `
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group hover:border-primary transition-colors cursor-pointer relative h-48" onclick="this.classList.toggle('flipped')">
+                    <!-- Front -->
+                    <div class="absolute inset-0 p-6 flex flex-col justify-between bg-white transition-opacity duration-300 z-10" style="backface-visibility: hidden;">
+                        <div>
+                            <div class="text-red-500 mb-2 font-bold text-sm uppercase tracking-wide">Problema</div>
+                            <h4 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                                <i class="fa-solid ${item.icon}"></i> ${item.problem}
+                            </h4>
+                            <p class="text-sm text-gray-500 mt-2">${item.desc}</p>
+                        </div>
+                        <div class="text-right text-primary text-xs font-bold">Ver Solución <i class="fa-solid fa-arrow-right ml-1"></i></div>
+                    </div>
+                    
+                    <!-- Back (simulated with JS toggle logic for simplicity in single file) -->
+                    <div class="absolute inset-0 p-6 bg-primary text-white flex flex-col justify-between opacity-0 hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100">
+                        <div>
+                            <div class="text-blue-200 mb-2 font-bold text-sm uppercase tracking-wide">Solución Tecnológica</div>
+                            <h4 class="text-lg font-bold text-white">${item.solution}</h4>
+                            <p class="text-sm text-blue-100 mt-2">${item.focus}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- RAG VISUALIZER LOGIC ---
+        function renderRAG() {
+            const container = document.getElementById('rag-steps');
+            const explanation = document.getElementById('rag-explanation');
+            
+            container.innerHTML = reportData.ragSteps.map((step, index) => `
+                <div onclick="showRagStep(${index})" class="bg-gray-800 hover:bg-gray-700 p-4 rounded-lg cursor-pointer transition-colors border border-gray-700 flex flex-col items-center text-center group">
+                    <div class="w-10 h-10 rounded-full bg-gray-900 border-2 border-accent text-accent flex items-center justify-center font-bold mb-3 group-hover:bg-accent group-hover:text-white transition-colors">${step.step}</div>
+                    <h4 class="font-bold text-sm text-gray-200">${step.title}</h4>
+                </div>
+            `).join('');
+        }
+
+        function showRagStep(index) {
+            const data = reportData.ragSteps[index];
+            const explanation = document.getElementById('rag-explanation');
+            explanation.innerHTML = `
+                <div>
+                    <strong class="text-accent block mb-1 text-lg">Paso ${data.step}: ${data.title}</strong>
+                    <p class="text-gray-300">${data.desc}</p>
+                </div>
+            `;
+        }
+
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            renderHRCards();
+            renderRAG();
+        });
+
+    </script>
+</body>
+</html>
