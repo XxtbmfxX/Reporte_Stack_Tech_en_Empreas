@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Deep Research - Análisis de RRHH y Herramientas">
 	<div class="min-h-screen flex flex-col">
 		<!-- Hero Section -->
-		<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 text-white py-20">
+		<header class="bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900 text-white py-20">
 			<div class="max-w-5xl mx-auto px-6 text-center">
 				<h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">
 					Deep Research
@@ -23,18 +23,18 @@ import Layout from '../layouts/Layout.astro';
 		</header>
 
 		<!-- Cards Section -->
-		<main class="flex-grow bg-slate-50 py-16">
+		<main class="grow bg-slate-50 py-16">
 			<div class="max-w-5xl mx-auto px-6">
 				<h2 class="text-2xl font-bold text-slate-800 mb-8 text-center">Investigaciones Disponibles</h2>
 				
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					
 					<!-- Card 1: Análisis RRHH -->
 					<a href="/analisis-rrhh" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300">
-						<div class="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+						<div class="h-2 bg-linear-to-r from-indigo-500 to-purple-500"></div>
 						<div class="p-6">
 							<div class="flex items-center gap-3 mb-4">
-								<span class="text-3xl">📊</span>
+								<span class="text-3xl" aria-hidden="true">📊</span>
 								<h3 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
 									Estrategia de Capital Humano
 								</h3>
@@ -49,17 +49,17 @@ import Layout from '../layouts/Layout.astro';
 							</ul>
 							<div class="flex items-center text-indigo-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
 								Ver análisis completo
-								<span class="ml-2">→</span>
+								<span class="ml-2" aria-hidden="true">→</span>
 							</div>
 						</div>
 					</a>
 
 					<!-- Card 2: Análisis Herramientas -->
 					<a href="/analisis-herramientas" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-orange-200 transition-all duration-300">
-						<div class="h-2 bg-gradient-to-r from-orange-500 to-amber-500"></div>
+						<div class="h-2 bg-linear-to-r from-orange-500 to-amber-500"></div>
 						<div class="p-6">
 							<div class="flex items-center gap-3 mb-4">
-								<span class="text-3xl">🛠️</span>
+								<span class="text-3xl" aria-hidden="true">🛠️</span>
 								<h3 class="text-xl font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
 									Análisis de Herramientas RRHH
 								</h3>
@@ -74,7 +74,32 @@ import Layout from '../layouts/Layout.astro';
 							</ul>
 							<div class="flex items-center text-orange-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
 								Ver análisis completo
-								<span class="ml-2">→</span>
+								<span class="ml-2" aria-hidden="true">→</span>
+							</div>
+						</div>
+					</a>
+
+					<!-- Card 3: Análisis Soluciones Tecnológicas -->
+					<a href="/analisis-soluciones" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
+						<div class="h-2 bg-linear-to-r from-blue-500 to-cyan-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-3 mb-4">
+								<span class="text-3xl" aria-hidden="true">💡</span>
+								<h3 class="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
+									Soluciones Tecnológicas 2026
+								</h3>
+							</div>
+							<p class="text-slate-600 text-sm mb-4">
+								Marcos de Entendimiento, Automatización Agéntica y Compliance Estratégico para decisiones tecnológicas.
+							</p>
+							<ul class="text-xs text-slate-500 space-y-1 mb-4">
+								<li>• Build vs Buy y TCO</li>
+								<li>• IA y Automatización por área</li>
+								<li>• Compliance y regulación laboral</li>
+							</ul>
+							<div class="flex items-center text-blue-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
+								Ver análisis completo
+								<span class="ml-2" aria-hidden="true">→</span>
 							</div>
 						</div>
 					</a>

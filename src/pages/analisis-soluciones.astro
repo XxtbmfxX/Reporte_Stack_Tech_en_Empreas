@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Tab {
+  id: string;
+  label: string;
+  icon: string;
+}
+
+const tabs: Tab[] = [
+  { id: 'marcos', label: 'Marcos Estratégicos', icon: 'compass' },
+  { id: 'automatizacion', label: 'IA y Automatización', icon: 'robot' },
+  { id: 'mercado', label: 'Ecosistema Software', icon: 'briefcase' },
+  { id: 'compliance', label: 'Compliance y Laboral', icon: 'shield' }
+];
+---
+
+<Layout title="Análisis de Soluciones Tecnológicas 2026">
+  <link 
+    slot="head" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+    rel="stylesheet"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  >
+  
+  <style>
+    .tab-content { 
+      display: none; 
+    }
+    .tab-content.active { 
+      display: block; 
+    }
+  </style>
+
+  <!-- Header -->
+  <header class="bg-slate-900 text-white py-8 px-6 shadow-xl">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-3xl font-bold mb-2">Análisis de Soluciones Tecnológicas</h1>
+      <p class="text-slate-400">Marcos de Entendimiento, Automatización Agéntica y Compliance Estratégico</p>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-8">
+    
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap gap-2 mb-8 border-b border-slate-200 pb-4" role="tablist" aria-label="Secciones del análisis">
+      {tabs.map((tab) => (
+        <button 
+          type="button"
+          role="tab"
+          aria-selected={tab.id === 'marcos' ? 'true' : 'false'}
+          aria-controls={tab.id}
+          data-tab={tab.id}
+          class={`tab-btn px-4 py-2 rounded-lg font-medium transition ${
+            tab.id === 'marcos' 
+              ? 'bg-blue-600 text-white' 
+              : 'text-slate-600 hover:bg-slate-200'
+          }`}
+          id={`btn-${tab.id}`}
+        >
+          <i class={`fas fa-${tab.icon} mr-2`} aria-hidden="true"></i>{tab.label}
+        </button>
+      ))}
+    </nav>
+
+    <!-- Section: Marcos Estratégicos -->
+    <section id="marcos" class="tab-content active space-y-6" role="tabpanel" aria-labelledby="btn-marcos">
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Build vs Buy -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-hammer text-blue-500 mr-2"></i>Build vs. Buy</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold mr-3 mt-1 uppercase">Buy</span>
+              <div>
+                <p class="font-semibold text-slate-800">Procesos de Soporte</p>
+                <p class="text-sm text-slate-600 italic">CRM estándar, nómina, finanzas. Foco: Eficiencia.</p>
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-bold mr-3 mt-1 uppercase">Build</span>
+              <div>
+                <p class="font-semibold text-slate-800">Core Business</p>
+                <p class="text-sm text-slate-600 italic">Diferenciador estratégico. No se delega el alma del negocio.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- TCO -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+          <h2 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-calculator text-blue-500 mr-2"></i>Costo Total de Propiedad (TCO)</h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div class="p-3 bg-slate-50 rounded-lg"><strong>Adquisición:</strong> Licencias e implementación.</div>
+            <div class="p-3 bg-slate-50 rounded-lg"><strong>Operación:</strong> AWS/Azure, Soporte.</div>
+            <div class="p-3 bg-slate-50 rounded-lg"><strong>Mantenimiento:</strong> Parches y refactorización.</div>
+            <div class="p-3 bg-slate-50 rounded-lg"><strong>Retiro:</strong> Migración y baja.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISO 25010 & Wardley -->
+      <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-bold text-lg mb-3">ISO/IEC 25010: Calidad Técnica</h3>
+            <p class="text-sm text-slate-400 mb-4">Métricas críticas para evaluar viabilidad:</p>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-slate-800 px-2 py-1 rounded">Adecuación Funcional</span>
+              <span class="bg-slate-800 px-2 py-1 rounded">Interoperabilidad</span>
+              <span class="bg-slate-800 px-2 py-1 rounded">Fiabilidad</span>
+              <span class="bg-slate-800 px-2 py-1 rounded">Seguridad</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-3">Wardley Mapping</h3>
+            <p class="text-sm text-slate-400">Ubicar la tecnología en ejes de <strong>Valor</strong> y <strong>Evolución</strong> (Génesis -> Producto -> Utilidad). Evita reinventar commodities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: IA y Automatización -->
+    <section id="automatizacion" class="tab-content space-y-6" role="tabpanel" aria-labelledby="btn-automatizacion">
+      <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-6">
+        <p class="text-sm text-amber-800 font-medium">
+          <i class="fas fa-exclamation-triangle mr-2"></i>
+          "Automatizar un proceso roto solo lo hace fallar más rápido."
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-5 rounded-xl border border-slate-200">
+          <h3 class="font-bold mb-3 text-blue-600">Finanzas (Alto ROI)</h3>
+          <ul class="text-sm space-y-2 text-slate-600">
+            <li>• Conciliación OCR de facturas.</li>
+            <li>• Cierre contable en tiempo real.</li>
+            <li>• Detección de fraude transaccional.</li>
+          </ul>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-200">
+          <h3 class="font-bold mb-3 text-blue-600">Operaciones / CX</h3>
+          <ul class="text-sm space-y-2 text-slate-600">
+            <li>• Agentes N1 autónomos (80% éxito).</li>
+            <li>• Optimización de rutas de campo.</li>
+            <li>• Ajuste de Safety Stock automático.</li>
+          </ul>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-200">
+          <h3 class="font-bold mb-3 text-blue-600">Tecnología / IT</h3>
+          <ul class="text-sm space-y-2 text-slate-600">
+            <li>• Documentación automática de código.</li>
+            <li>• Pruebas QA y parches sugeridos.</li>
+            <li>• Escalado horizontal automático.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Matriz de Viabilidad -->
+      <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 mt-8">
+        <table class="w-full text-left">
+          <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+              <th class="p-4 text-sm font-bold">Criterio</th>
+              <th class="p-4 text-sm font-bold text-emerald-600 text-center">Alta Automatabilidad</th>
+              <th class="p-4 text-sm font-bold text-rose-600 text-center">Baja Automatabilidad</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm divide-y divide-slate-100">
+            <tr>
+              <td class="p-4 font-medium">Volumen</td>
+              <td class="p-4 text-center">Diario / Masivo</td>
+              <td class="p-4 text-center">Esporádico</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium">Reglas</td>
+              <td class="p-4 text-center">Lógica "Si A, entonces B"</td>
+              <td class="p-4 text-center">Juicio Subjetivo / Ética</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium">Datos</td>
+              <td class="p-4 text-center">Estructurados (BBDD)</td>
+              <td class="p-4 text-center">Físicos o Desestructurados</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section: Mercado y Herramientas -->
+    <section id="mercado" class="tab-content space-y-6" role="tabpanel" aria-labelledby="btn-mercado">
+      <!-- Categorías de Software -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Finanzas -->
+        <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-200">
+          <h4 class="font-bold text-slate-700 border-b pb-2 mb-3">Finanzas y Caja</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">NetSuite</span>
+            <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">Trezy</span>
+            <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">Ramp</span>
+            <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs">Buk Finanzas</span>
+          </div>
+        </div>
+        <!-- CX -->
+        <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-200">
+          <h4 class="font-bold text-slate-700 border-b pb-2 mb-3">Customer Experience</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs">Salesforce Agentforce</span>
+            <span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs">Zendesk AI</span>
+            <span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-xs">Ada</span>
+          </div>
+        </div>
+        <!-- HR -->
+        <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-200">
+          <h4 class="font-bold text-slate-700 border-b pb-2 mb-3">RRHH & Payroll</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-emerald-50 text-emerald-700 px-2 py-1 rounded text-xs">Deel</span>
+            <span class="bg-emerald-50 text-emerald-700 px-2 py-1 rounded text-xs">Rippling</span>
+            <span class="bg-emerald-50 text-emerald-700 px-2 py-1 rounded text-xs">Buk / Talana</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deep Dive Buk vs Talana -->
+      <div class="mt-8 bg-blue-50 p-6 rounded-2xl border border-blue-100">
+        <h3 class="text-xl font-bold text-blue-900 mb-6 flex items-center justify-center">
+          <i class="fas fa-flag-checkered mr-3"></i>El Duelo en Chile: Buk vs. Talana
+        </h3>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-white p-5 rounded-xl shadow-sm">
+            <h4 class="font-bold text-blue-600 mb-2">BUK</h4>
+            <p class="text-sm text-slate-600 mb-4">Enfoque "All-in-One" con prioridad en <strong>Cultura y Talento</strong>. Interfaz moderna y modular.</p>
+            <ul class="text-xs space-y-1 text-slate-500 italic">
+              <li>• Ideal para Engagement</li>
+              <li>• Calculadora modular</li>
+            </ul>
+          </div>
+          <div class="bg-white p-5 rounded-xl shadow-sm">
+            <h4 class="font-bold text-blue-600 mb-2">TALANA</h4>
+            <p class="text-sm text-slate-600 mb-4">Fortaleza en <strong>Operación Pura</strong>. Control de asistencia y cumplimiento legal crítico.</p>
+            <ul class="text-xs space-y-1 text-slate-500 italic">
+              <li>• Ideal para Alta Rotación</li>
+              <li>• Precisión en Turnos Complejos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-6 text-center">
+          <p class="text-sm font-bold text-blue-800">Costo promedio (50-200 colaboradores): 0,15 a 0,25 UF por mes/empleado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Compliance y Laboral -->
+    <section id="compliance" class="tab-content space-y-6" role="tabpanel" aria-labelledby="btn-compliance">
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Leyes Críticas Chile -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="text-xl font-bold mb-4 text-rose-600">Regulación Crítica en Chile</h3>
+          <div class="space-y-4">
+            <div class="flex items-center p-3 bg-rose-50 rounded-lg">
+              <i class="fas fa-clock text-rose-500 w-8"></i>
+              <div>
+                <p class="font-bold text-sm">Ley 40 Horas (21.561)</p>
+                <p class="text-xs text-slate-500 italic">Reducción de jornada y bandas horarias.</p>
+              </div>
+            </div>
+            <div class="flex items-center p-3 bg-rose-50 rounded-lg">
+              <i class="fas fa-hand-holding-medical text-rose-500 w-8"></i>
+              <div>
+                <p class="font-bold text-sm">Ley Karin (21.643)</p>
+                <p class="text-xs text-slate-500 italic">Prevención de acoso y violencia. Protocolo obligatorio.</p>
+              </div>
+            </div>
+            <div class="flex items-center p-3 bg-rose-50 rounded-lg">
+              <i class="fas fa-gavel text-rose-500 w-8"></i>
+              <div>
+                <p class="font-bold text-sm">Ley 20.393 / 21.595</p>
+                <p class="text-xs text-slate-500 italic">Prevención de delitos económicos y ambientales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Definición de Compliance -->
+        <div class="bg-slate-900 text-white p-6 rounded-xl">
+          <h3 class="text-xl font-bold mb-4">Pilares del Compliance</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="text-center p-3 border border-slate-700 rounded-lg">
+              <i class="fas fa-search-plus text-blue-400 mb-2"></i>
+              <p class="text-xs font-bold">Detección</p>
+              <p class="text-[10px] text-slate-400 italic">Canal de denuncias anónimas.</p>
+            </div>
+            <div class="text-center p-3 border border-slate-700 rounded-lg">
+              <i class="fas fa-shield-alt text-emerald-400 mb-2"></i>
+              <p class="text-xs font-bold">Prevención</p>
+              <p class="text-[10px] text-slate-400 italic">Matriz de riesgos proactiva.</p>
+            </div>
+            <div class="text-center p-3 border border-slate-700 rounded-lg">
+              <i class="fas fa-users text-amber-400 mb-2"></i>
+              <p class="text-xs font-bold">Cultura Ética</p>
+              <p class="text-[10px] text-slate-400 italic">"Tone at the Top".</p>
+            </div>
+            <div class="text-center p-3 border border-slate-700 rounded-lg">
+              <i class="fas fa-sync text-purple-400 mb-2"></i>
+              <p class="text-xs font-bold">Monitoreo</p>
+              <p class="text-[10px] text-slate-400 italic">Auditoría y respuesta interna.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen por Sector -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 mt-6">
+        <h3 class="font-bold mb-4">Prioridades por Riesgo Sistémico</h3>
+        <div class="grid md:grid-cols-3 gap-4 text-xs">
+          <div class="p-4 bg-slate-50 rounded-lg">
+            <h4 class="font-bold uppercase mb-2">Industrial / Minero</h4>
+            <p>Foco: <strong>SST y Ambiental</strong>. Solidaridad en subcontratación.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-lg">
+            <h4 class="font-bold uppercase mb-2">Retail / Servicios</h4>
+            <p>Foco: <strong>Ley Karin y Jornada</strong>. Control de asistencia crítico.</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-lg">
+            <h4 class="font-bold uppercase mb-2">Tech / Startups</h4>
+            <p>Foco: <strong>Propiedad Intelectual y Teletrabajo</strong>. Protección de datos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Critical Reflection Box -->
+    <section class="mt-12 bg-indigo-900 text-white p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+      <div class="relative z-10">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+          <i class="fas fa-lightbulb text-yellow-400 mr-3"></i>Reflexión Mayéutica (First Principles)
+        </h3>
+        <div class="grid md:grid-cols-2 gap-8 italic text-indigo-100">
+          <p>"Si eliminamos esta herramienta mañana, ¿qué proceso crítico se detendría realmente y por qué?"</p>
+          <p>"¿Estamos aceptando un Vendor Lock-in (dependencia del proveedor) por comodidad estética o por valor técnico?"</p>
+          <p>"¿La automatización resuelve el problema de raíz o solo hace que la ineficiencia sea más rápida?"</p>
+          <p>"¿Nuestra cultura ética es un manual en PDF o se vive en el 'Tone at the Top'?"</p>
+        </div>
+      </div>
+      <!-- Decor -->
+      <div class="absolute top-0 right-0 p-8 opacity-10">
+        <i class="fas fa-brain text-[10rem]"></i>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-12 text-center text-slate-400 text-sm">
+    <p>Dashboard de Análisis Tecnológico y Legal &bull; 2026</p>
+  </footer>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      function openTab(tabId) {
+        // Ocultar todos los contenidos
+        tabContents.forEach(function(content) {
+          content.classList.remove('active');
+        });
+
+        // Desactivar todos los botones
+        tabButtons.forEach(function(btn) {
+          btn.classList.remove('bg-blue-600', 'text-white');
+          btn.classList.add('text-slate-600', 'hover:bg-slate-200');
+          btn.setAttribute('aria-selected', 'false');
+        });
+
+        // Mostrar el seleccionado
+        var selectedContent = document.getElementById(tabId);
+        if (selectedContent) {
+          selectedContent.classList.add('active');
+        }
+        
+        // Activar botón
+        var activeBtn = document.getElementById('btn-' + tabId);
+        if (activeBtn) {
+          activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-200');
+          activeBtn.classList.add('bg-blue-600', 'text-white');
+          activeBtn.setAttribute('aria-selected', 'true');
+        }
+      }
+
+      // Event delegation para los tabs
+      tabButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var tabId = this.getAttribute('data-tab');
+          if (tabId) {
+            openTab(tabId);
+          }
+        });
+      });
+    });
+  </script>
+</Layout>

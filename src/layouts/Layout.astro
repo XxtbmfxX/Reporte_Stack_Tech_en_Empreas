@@ -3,9 +3,13 @@ import '../styles/global.css';
 
 interface Props {
 	title?: string;
+	description?: string;
 }
 
-const { title = "Deep Research - Análisis RRHH" } = Astro.props;
+const { 
+	title = "Deep Research - Análisis RRHH",
+	description = "Análisis estratégico de Capital Humano y herramientas tecnológicas para PYMES en Chile"
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -13,12 +17,14 @@ const { title = "Deep Research - Análisis RRHH" } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<slot name="head" />
 	</head>
-	<body class="bg-slate-50 min-h-screen">
+	<body class="bg-slate-50 min-h-screen text-slate-900">
 		<slot />
 	</body>
 </html>
