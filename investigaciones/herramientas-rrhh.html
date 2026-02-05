@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Herramientas RRHH: Buk, Talana, Webdox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Warm Professional. Backgrounds in Warm Gray/Sand (#f5f5f4), Accents in Slate (#475569) and specialized Brand colors for tools (Buk-Blue, Talana-Orange, Webdox-Purple) to guide navigation. -->
+    
+    <!-- Application Structure Plan: 
+         1. Strategic Dashboard (Hero & Overview): Contextualizes the SME need (50-200 employees) and State of the Art.
+         2. Comparative Ecosystem (Radar & Charts): Visualizes the "Focus" difference. Crucial to show that Webdox is vertical (Legal) while Buk/Talana are horizontal (General HR).
+         3. Deep Dive Modules (Interactive Tabs): Detailed cards for each tool covering Focus, AI, and Technical aspects.
+         4. Feature Matrix (Filterable Grid): Engineering view of functionalities (Shared vs. Unique).
+         5. Implementation & Roadmap: Analysis of replication and future trends.
+         Why? This structure moves from the "Big Picture" (Strategy) to "Details" (Features) to "Action" (Implementation), suitable for a decision-maker or engineer. -->
+
+    <!-- Visualization & Content Choices:
+         1. State of the Art -> Inform -> Donut Chart -> Simple Context -> Shows market maturity levels.
+         2. Strategic Focus -> Compare -> Radar Chart -> Interaction: Toggle Datasets -> Justification: Best way to show multi-axial strengths (Hard HR vs Soft HR vs Legal).
+         3. Feature Density -> Compare -> Bar Chart -> Static overview -> Quantifies scope.
+         4. Functionality Matrix -> Organize -> Filterable HTML Grid -> Click to Filter -> Best for scanning large lists of features.
+         5. Architecture Diagram -> Inform -> CSS Grid/Flexbox Blocks -> Conceptual visual -> No SVG needed, utilizing styled divs to show Modular vs Monolithic structures. -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #1c1917; }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 350px; 
+            max-height: 400px; 
+        }
+        @media (max-width: 768px) {
+            .chart-container { height: 300px; }
+        }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
+        .tab-active { border-bottom: 2px solid #ea580c; color: #ea580c; font-weight: 600; }
+        .tab-inactive { color: #57534e; }
+        .tab-inactive:hover { color: #292524; }
+        
+        /* Tool Branding Accents */
+        .brand-buk { border-left: 4px solid #2563eb; }
+        .brand-talana { border-left: 4px solid #ea580c; }
+        .brand-webdox { border-left: 4px solid #7c3aed; }
+
+        /* Custom Scrollbar for matrix */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #e7e5e4; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #a8a29e; border-radius: 3px; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-xl font-bold text-stone-800">HR Tech <span class="text-stone-500 font-light">Analysis</span></span>
+                    </div>
+                    <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+                        <button onclick="scrollToSection('dashboard')" class="text-stone-900 px-3 py-2 text-sm font-medium hover:text-orange-600 transition">Dashboard</button>
+                        <button onclick="scrollToSection('comparison')" class="text-stone-500 px-3 py-2 text-sm font-medium hover:text-orange-600 transition">Comparativa</button>
+                        <button onclick="scrollToSection('matrix')" class="text-stone-500 px-3 py-2 text-sm font-medium hover:text-orange-600 transition">Funcionalidades</button>
+                        <button onclick="scrollToSection('engineering')" class="text-stone-500 px-3 py-2 text-sm font-medium hover:text-orange-600 transition">Ingeniería</button>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="px-3 py-1 rounded-full bg-stone-100 text-xs font-semibold text-stone-600">Foco: PYMES (50-200)</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Header / Context -->
+        <section id="dashboard" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl font-bold text-stone-900 sm:text-4xl">Panorama de Herramientas RRHH</h1>
+                <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">
+                    Análisis técnico y funcional de <strong>Buk</strong>, <strong>Talana</strong> y <strong>Webdox</strong>. 
+                    Evaluación de compliance, gestión dura/blanda e integración de IA para empresas en crecimiento.
+                </p>
+            </div>
+
+            <!-- Intro Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <!-- State of the Art -->
+                <div class="bg-white rounded-xl card-shadow p-6 col-span-1 lg:col-span-2">
+                    <h3 class="text-lg font-semibold text-stone-800 mb-4">Estado del Arte: Digitalización en RRHH</h3>
+                    <p class="text-stone-600 text-sm mb-4">
+                        Las PYMES de 50-200 empleados se encuentran en una etapa de transición crítica. Ya no pueden depender de Excel, pero los ERPs tradicionales (SAP, Oracle) son costosos y rígidos. La tendencia actual es hacia <strong>Ecosistemas Integrados</strong> en la nube (SaaS).
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <span class="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs mt-0.5">✓</span>
+                                    <span class="ml-3 text-sm text-stone-600"><strong>Automatización:</strong> Fin de la carga manual de datos.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs mt-0.5">✓</span>
+                                    <span class="ml-3 text-sm text-stone-600"><strong>Employee Experience (EX):</strong> Autogestión mediante Apps móviles.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs mt-0.5">✓</span>
+                                    <span class="ml-3 text-sm text-stone-600"><strong>Compliance Dinámico:</strong> Actualización legal automática (Ley 40 horas, Karin).</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Donut Chart Container -->
+                        <div class="chart-container h-48">
+                            <canvas id="marketChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Metrics Summary -->
+                <div class="bg-white rounded-xl card-shadow p-6">
+                    <h3 class="text-lg font-semibold text-stone-800 mb-4">Foco del Análisis</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-sm font-medium text-stone-600 mb-1">
+                                <span>Gestión Dura (Nómina/Ops)</span>
+                                <span>Alta Prioridad</span>
+                            </div>
+                            <div class="w-full bg-stone-200 rounded-full h-2">
+                                <div class="bg-stone-600 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-medium text-stone-600 mb-1">
+                                <span>Gestión Blanda (Talento/Cultura)</span>
+                                <span>Creciente</span>
+                            </div>
+                            <div class="w-full bg-stone-200 rounded-full h-2">
+                                <div class="bg-stone-400 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-medium text-stone-600 mb-1">
+                                <span>Compliance & Legal</span>
+                                <span>Crítico</span>
+                            </div>
+                            <div class="w-full bg-stone-200 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-orange-50 rounded-lg border border-orange-100">
+                        <p class="text-xs text-orange-800 font-medium">💡 Insight de Ingeniería</p>
+                        <p class="text-xs text-orange-700 mt-1">
+                            La integración API entre sistemas especializados (Webdox) y generalistas (Buk/Talana) es el desafío técnico principal.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparative Analysis Section -->
+        <section id="comparison" class="bg-stone-50 py-12 border-t border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-10">
+                    <h2 class="text-2xl font-bold text-stone-900">Análisis Comparativo de Enfoque</h2>
+                    <p class="mt-2 text-stone-600">Visualización de las fortalezas estratégicas de cada herramienta. Mientras Buk y Talana compiten en el espacio generalista, Webdox domina el nicho legal.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    
+                    <!-- Radar Chart Section -->
+                    <div class="bg-white p-6 rounded-xl card-shadow">
+                        <h3 class="text-lg font-semibold text-stone-800 mb-2 text-center">Mapa de Cobertura Funcional</h3>
+                        <div class="chart-container">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                        <div class="flex justify-center mt-4 space-x-4">
+                            <button onclick="toggleDataset(0)" class="px-3 py-1 text-xs rounded-full border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition">Buk</button>
+                            <button onclick="toggleDataset(1)" class="px-3 py-1 text-xs rounded-full border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 transition">Talana</button>
+                            <button onclick="toggleDataset(2)" class="px-3 py-1 text-xs rounded-full border border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100 transition">Webdox</button>
+                        </div>
+                    </div>
+
+                    <!-- Tool Details (Interactive Tabs) -->
+                    <div class="bg-white rounded-xl card-shadow overflow-hidden min-h-[450px] flex flex-col">
+                        <div class="flex border-b border-stone-200">
+                            <button onclick="switchTab('buk')" id="tab-buk" class="flex-1 py-4 text-sm font-medium text-center tab-active hover:bg-stone-50 transition">Buk</button>
+                            <button onclick="switchTab('talana')" id="tab-talana" class="flex-1 py-4 text-sm font-medium text-center tab-inactive hover:bg-stone-50 transition">Talana</button>
+                            <button onclick="switchTab('webdox')" id="tab-webdox" class="flex-1 py-4 text-sm font-medium text-center tab-inactive hover:bg-stone-50 transition">Webdox</button>
+                        </div>
+
+                        <!-- Content Area -->
+                        <div id="content-buk" class="p-6 flex-grow tool-content">
+                            <div class="flex items-center mb-4">
+                                <div class="w-3 h-3 rounded-full bg-blue-600 mr-2"></div>
+                                <h3 class="text-xl font-bold text-stone-800">Buk: El Ecosistema "People-First"</h3>
+                            </div>
+                            <p class="text-stone-600 text-sm mb-4">
+                                <strong>Enfoque:</strong> Plataforma integral que busca cubrir todo el ciclo de vida del colaborador ("desde el reclutamiento hasta el retiro"). Su fortaleza radica en una interfaz amigable y un fuerte módulo de cultura.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">Gestión Dura & Compliance</h4>
+                                    <p class="text-xs text-stone-600 mt-1">Motor de nómina robusto para Chile, Perú, Colombia. Compliance legal automatizado (Cálculos de sueldos, DJ, Previred).</p>
+                                </div>
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">IA & Tecnología</h4>
+                                    <p class="text-xs text-stone-600 mt-1">Implementa "Buk Copilot" (IA Generativa) para redacción de descripciones de cargo, feedback de desempeño y análisis de clima.</p>
+                                </div>
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">Diferenciador</h4>
+                                    <p class="text-xs text-stone-600 mt-1">Módulos de "Adelanto de Sueldo" y Beneficios integrados. Fuerte enfoque en Gestión de Desempeño y Talento.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="content-talana" class="p-6 flex-grow tool-content hidden">
+                            <div class="flex items-center mb-4">
+                                <div class="w-3 h-3 rounded-full bg-orange-600 mr-2"></div>
+                                <h3 class="text-xl font-bold text-stone-800">Talana: Operaciones y Velocidad</h3>
+                            </div>
+                            <p class="text-stone-600 text-sm mb-4">
+                                <strong>Enfoque:</strong> "SuperApp" de RRHH con un enfoque extremadamente fuerte en la operatividad móvil y la gestión de tiempo/asistencia. Ideal para empresas con alta rotación o personal en terreno.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">Gestión Dura & Compliance</h4>
+                                    <p class="text-xs text-stone-600 mt-1">Excelente módulo de Asistencia y Turnos (Geolocalización). Firma digital nativa muy rápida para contratos masivos.</p>
+                                </div>
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">IA & Tecnología</h4>
+                                    <p class="text-xs text-stone-600 mt-1">Uso de IA enfocado en asistentes virtuales para consultas de liquidaciones y automatización de flujo de turnos.</p>
+                                </div>
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">Diferenciador</h4>
+                                    <p class="text-xs text-stone-600 mt-1">"Talana Next" y ecosistema de pagos. Su app móvil es percibida como la más robusta para el usuario final en terreno.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="content-webdox" class="p-6 flex-grow tool-content hidden">
+                            <div class="flex items-center mb-4">
+                                <div class="w-3 h-3 rounded-full bg-purple-600 mr-2"></div>
+                                <h3 class="text-xl font-bold text-stone-800">Webdox: CLM Legal (Especialista)</h3>
+                            </div>
+                            <p class="text-stone-600 text-sm mb-4">
+                                <strong>Enfoque:</strong> NO es un software de RRHH generalista (no hace nómina). Es un CLM (Contract Lifecycle Management). Se analiza aquí como complemento crítico para el compliance legal laboral complejo.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">Gestión Dura & Compliance</h4>
+                                    <p class="text-xs text-stone-600 mt-1">El rey del compliance contractual. Trazabilidad total de versiones, cláusulas y firmas. Vital para evitar multas laborales por documentación.</p>
+                                </div>
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">IA & Tecnología</h4>
+                                    <p class="text-xs text-stone-600 mt-1">IA avanzada para lectura y extracción de metadatos contractuales. Detecta cláusulas de riesgo y fechas de vencimiento automáticamente.</p>
+                                </div>
+                                <div class="p-3 bg-stone-50 rounded border border-stone-200">
+                                    <h4 class="text-xs font-bold text-stone-700 uppercase">Diferenciador</h4>
+                                    <p class="text-xs text-stone-600 mt-1">Interoperabilidad con áreas legales y de compras, no solo RRHH. Auditoría legal profunda que Buk/Talana no ofrecen a este nivel.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Matrix Section -->
+        <section id="matrix" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-stone-900 mb-6">Matriz de Funcionalidades (Ingeniería)</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <p class="text-stone-600 text-sm max-w-2xl">
+                    Desglose granular de capacidades. Utilice los filtros para identificar brechas y oportunidades de integración.
+                    <br><span class="text-xs text-stone-400 italic">*Webdox se evalúa en su capacidad de soportar procesos de RRHH.</span>
+                </p>
+                <div class="flex space-x-2">
+                    <button onclick="filterMatrix('all')" class="px-3 py-1 bg-stone-200 text-stone-700 rounded text-xs hover:bg-stone-300 font-medium transition">Todas</button>
+                    <button onclick="filterMatrix('hard')" class="px-3 py-1 bg-white border border-stone-300 text-stone-600 rounded text-xs hover:bg-stone-50 transition">Gestión Dura</button>
+                    <button onclick="filterMatrix('soft')" class="px-3 py-1 bg-white border border-stone-300 text-stone-600 rounded text-xs hover:bg-stone-50 transition">Gestión Blanda</button>
+                    <button onclick="filterMatrix('tech')" class="px-3 py-1 bg-white border border-stone-300 text-stone-600 rounded text-xs hover:bg-stone-50 transition">Tecnología/IA</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl card-shadow overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-stone-200">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-stone-500 uppercase tracking-wider w-1/3">Funcionalidad</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-stone-500 uppercase tracking-wider">Buk</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-stone-500 uppercase tracking-wider">Talana</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-stone-500 uppercase tracking-wider">Webdox</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matrix-body" class="bg-white divide-y divide-stone-200">
+                            <!-- Rows generated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Engineering & Implementation Section -->
+        <section id="engineering" class="bg-stone-100 py-12 border-t border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Left: Implementation Analysis -->
+                    <div>
+                        <h2 class="text-2xl font-bold text-stone-900 mb-6">Implementación y Duplicación</h2>
+                        <div class="prose prose-stone text-sm">
+                            <p class="mb-4">
+                                Para una PYME o equipo de ingeniería que busque replicar o implementar estas tecnologías, el análisis técnico revela dos arquitecturas predominantes:
+                            </p>
+                            
+                            <!-- Architectural Concept Blocks -->
+                            <div class="space-y-4 my-6">
+                                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500 shadow-sm">
+                                    <h4 class="font-bold text-stone-800">Modelo Monolítico Modular (Buk/Talana)</h4>
+                                    <p class="text-stone-600 mt-1">
+                                        Core centralizado de "Empleado Único". Todos los módulos (remuneraciones, asistencia, clima) leen de una base de datos maestra. 
+                                        <br><span class="text-xs text-blue-600 font-semibold">Desafío de Duplicación:</span> Complejidad en el motor de cálculo de nómina (reglas de negocio locales muy variables).
+                                    </p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500 shadow-sm">
+                                    <h4 class="font-bold text-stone-800">Modelo Vertical API-First (Webdox)</h4>
+                                    <p class="text-stone-600 mt-1">
+                                        Especialización profunda. Se conecta al ecosistema vía REST APIs.
+                                        <br><span class="text-xs text-purple-600 font-semibold">Desafío de Duplicación:</span> Motores de OCR y NLP (Procesamiento de Lenguaje Natural) para entender contratos legales no estructurados.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <h3 class="font-bold text-stone-800 mt-6 mb-2">Funcionalidades Futuras / Missing</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-stone-600">
+                                <li><strong>Analítica Predictiva de Fuga:</strong> Aunque hay IA, falta mayor profundidad en predecir quién renunciará basado en patrones de asistencia y desempeño (Cross-data).</li>
+                                <li><strong>Onboarding Inmersivo:</strong> Uso de realidad aumentada o experiencias gamificadas pre-ingreso.</li>
+                                <li><strong>Wellness Biométrico:</strong> Integración con wearables para medir estrés laboral (incipiente).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right: Technical Focus Chart -->
+                    <div>
+                         <h3 class="text-lg font-semibold text-stone-800 mb-4">Enfoque Técnico Comparado</h3>
+                         <div class="bg-white p-6 rounded-xl card-shadow">
+                             <div class="chart-container">
+                                 <canvas id="techChart"></canvas>
+                             </div>
+                             <div class="mt-4 text-xs text-stone-500 text-center">
+                                 Comparación de prioridades de desarrollo e inversión tecnológica.
+                             </div>
+                         </div>
+                         
+                         <!-- Quick Implementation Guide -->
+                         <div class="mt-6 bg-white p-6 rounded-xl card-shadow">
+                             <h4 class="font-bold text-stone-800 text-sm mb-3">Roadmap de Implementación PYME</h4>
+                             <div class="flex items-center justify-between text-xs text-stone-600 mb-2">
+                                 <span>Fase 1: Higiene (Nómina/Docs)</span>
+                                 <span class="font-bold text-green-600">1-2 Meses</span>
+                             </div>
+                             <div class="w-full bg-stone-100 rounded-full h-1.5 mb-4">
+                                 <div class="bg-green-500 h-1.5 rounded-full" style="width: 30%"></div>
+                             </div>
+                             
+                             <div class="flex items-center justify-between text-xs text-stone-600 mb-2">
+                                 <span>Fase 2: Gestión Talento (Desempeño)</span>
+                                 <span class="font-bold text-orange-600">3-6 Meses</span>
+                             </div>
+                             <div class="w-full bg-stone-100 rounded-full h-1.5 mb-4">
+                                 <div class="bg-orange-500 h-1.5 rounded-full" style="width: 60%"></div>
+                             </div>
+
+                             <div class="flex items-center justify-between text-xs text-stone-600 mb-2">
+                                 <span>Fase 3: Analytics & IA</span>
+                                 <span class="font-bold text-blue-600">6+ Meses</span>
+                             </div>
+                             <div class="w-full bg-stone-100 rounded-full h-1.5">
+                                 <div class="bg-blue-500 h-1.5 rounded-full" style="width: 85%"></div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm">Análisis generado para evaluación de herramientas RRHH en segmento PYME.</p>
+            <p class="text-xs mt-2 text-stone-600">Datos simulados basados en perfiles públicos de Webdox, Buk y Talana.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // State Management
+        const state = {
+            currentTab: 'buk',
+            filter: 'all'
+        };
+
+        // Data for Matrix
+        const matrixData = [
+            { category: 'hard', name: 'Motor de Nómina (Chile)', buk: 'Nativo (Robusto)', talana: 'Nativo (Flexible)', webdox: '❌ No Aplica' },
+            { category: 'hard', name: 'Gestión de Asistencia/Turnos', buk: 'Integrado', talana: '⭐ Core (Geoloc)', webdox: '❌ No Aplica' },
+            { category: 'hard', name: 'Firma Digital', buk: 'Integrada', talana: 'Integrada', webdox: '⭐ Core (Avanzada)' },
+            { category: 'hard', name: 'Compliance Legal (DT)', buk: 'Automático', talana: 'Automático', webdox: 'Gestión Contractual' },
+            { category: 'soft', name: 'Gestión de Desempeño', buk: '⭐ Completo', talana: 'Básico', webdox: '❌ No Aplica' },
+            { category: 'soft', name: 'Portal del Colaborador (App)', buk: 'Excelente UX', talana: 'Excelente Operatividad', webdox: 'Solo firmas' },
+            { category: 'soft', name: 'Clima y Cultura', buk: 'Módulo Dedicado', talana: 'Encuestas Básicas', webdox: '❌ No Aplica' },
+            { category: 'tech', name: 'Asistente IA', buk: 'Buk Copilot (GenAI)', talana: 'Bots de Consulta', webdox: 'IA Análisis Legal' },
+            { category: 'tech', name: 'Integración API', buk: 'API Abierta', talana: 'API Abierta', webdox: 'API Webhooks' },
+        ];
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            renderMatrix();
+        });
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // Update State
+            state.currentTab = tabName;
+
+            // UI Updates
+            ['buk', 'talana', 'webdox'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                const content = document.getElementById(`content-${t}`);
+                
+                if (t === tabName) {
+                    btn.classList.remove('tab-inactive', 'border-transparent');
+                    btn.classList.add('tab-active');
+                    content.classList.remove('hidden');
+                    
+                    // Add specific brand border
+                    if(t === 'buk') content.classList.add('brand-buk');
+                    if(t === 'talana') content.classList.add('brand-talana');
+                    if(t === 'webdox') content.classList.add('brand-webdox');
+                } else {
+                    btn.classList.add('tab-inactive', 'border-transparent');
+                    btn.classList.remove('tab-active');
+                    content.classList.add('hidden');
+                    content.classList.remove('brand-buk', 'brand-talana', 'brand-webdox');
+                }
+            });
+        }
+
+        // Scrolling
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Matrix Rendering
+        function filterMatrix(category) {
+            state.filter = category;
+            
+            // Update Buttons
+            const buttons = document.querySelectorAll('#matrix button'); // Simplified selector logic needed here or custom classes
+            // For simplicity in this single file, just re-rendering based on state
+            renderMatrix();
+        }
+
+        function renderMatrix() {
+            const tbody = document.getElementById('matrix-body');
+            tbody.innerHTML = '';
+
+            const filtered = state.filter === 'all' 
+                ? matrixData 
+                : matrixData.filter(item => item.category === state.filter);
+
+            filtered.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.className = index % 2 === 0 ? 'bg-white' : 'bg-stone-50';
+                
+                // Color coding for checks vs cross
+                const formatCell = (text) => {
+                    if (text.includes('⭐')) return `<span class="text-amber-600 font-bold">${text}</span>`;
+                    if (text.includes('❌')) return `<span class="text-stone-300 italic">${text}</span>`;
+                    return `<span class="text-stone-700">${text}</span>`;
+                };
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-stone-900 border-r border-stone-100">${item.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center border-r border-stone-100">${formatCell(item.buk)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center border-r border-stone-100">${formatCell(item.talana)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">${formatCell(item.webdox)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Chart Initialization
+        let radarChartInstance = null;
+
+        function initCharts() {
+            // 1. Market/Digitalization Chart (Donut)
+            const ctxMarket = document.getElementById('marketChart').getContext('2d');
+            new Chart(ctxMarket, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Excel/Manual', 'ERP Legacy', 'SaaS Moderno (Buk/Talana)'],
+                    datasets: [{
+                        data: [25, 30, 45],
+                        backgroundColor: ['#d6d3d1', '#78716c', '#ea580c'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Radar Chart (Comparison)
+            const ctxRadar = document.getElementById('radarChart').getContext('2d');
+            radarChartInstance = new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: ['Gestión Dura (Nómina)', 'Gestión Blanda (Talento)', 'Cultura & Clima', 'Compliance Legal', 'Movilidad/App', 'Innovación/IA'],
+                    datasets: [
+                        {
+                            label: 'Buk',
+                            data: [9, 9, 10, 8, 8, 9],
+                            fill: true,
+                            backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                            borderColor: 'rgb(37, 99, 235)',
+                            pointBackgroundColor: 'rgb(37, 99, 235)',
+                        },
+                        {
+                            label: 'Talana',
+                            data: [9, 7, 6, 8, 10, 7],
+                            fill: true,
+                            backgroundColor: 'rgba(234, 88, 12, 0.2)',
+                            borderColor: 'rgb(234, 88, 12)',
+                            pointBackgroundColor: 'rgb(234, 88, 12)',
+                            hidden: false
+                        },
+                        {
+                            label: 'Webdox',
+                            data: [0, 0, 0, 10, 4, 8], // Specialized tool profile
+                            fill: true,
+                            backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                            borderColor: 'rgb(124, 58, 237)',
+                            pointBackgroundColor: 'rgb(124, 58, 237)',
+                            hidden: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e5e7eb' },
+                            grid: { color: '#e5e7eb' },
+                            pointLabels: { font: { size: 11, family: 'Inter' }, color: '#4b5563' },
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false } // Custom legend buttons used instead
+                    }
+                }
+            });
+
+            // 3. Tech Focus Bar Chart
+            const ctxTech = document.getElementById('techChart').getContext('2d');
+            new Chart(ctxTech, {
+                type: 'bar',
+                data: {
+                    labels: ['UX/UI', 'Motor Cálculo', 'IA/Algoritmos', 'Seguridad Datos', 'Integraciones'],
+                    datasets: [
+                        {
+                            label: 'Buk',
+                            data: [90, 85, 80, 85, 70],
+                            backgroundColor: '#2563eb'
+                        },
+                        {
+                            label: 'Talana',
+                            data: [80, 85, 60, 80, 75],
+                            backgroundColor: '#ea580c'
+                        },
+                        {
+                            label: 'Webdox',
+                            data: [70, 0, 90, 95, 85], // High Security & IA, 0 Calculation
+                            backgroundColor: '#7c3aed'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 100, grid: { color: '#f5f5f4' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // Toggle Radar Datasets
+        function toggleDataset(index) {
+            const meta = radarChartInstance.getDatasetMeta(index);
+            meta.hidden = meta.hidden === null ? !radarChartInstance.data.datasets[index].hidden : null;
+            
+            // Visual feedback on buttons could be added here
+            radarChartInstance.update();
+        }
+
+    </script>
+</body>
+</html>
