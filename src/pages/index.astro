@@ -1,0 +1,94 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Deep Research - Análisis de RRHH y Herramientas">
+	<div class="min-h-screen flex flex-col">
+		<!-- Hero Section -->
+		<header class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 text-white py-20">
+			<div class="max-w-5xl mx-auto px-6 text-center">
+				<h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">
+					Deep Research
+				</h1>
+				<p class="text-xl text-slate-300 font-light max-w-2xl mx-auto">
+					Análisis estratégico de Capital Humano y herramientas tecnológicas para PYMES en Chile
+				</p>
+				<div class="mt-6 flex justify-center gap-2 text-xs font-mono text-slate-400">
+					<span class="px-3 py-1 bg-slate-800/50 rounded-full">RRHH</span>
+					<span class="px-3 py-1 bg-slate-800/50 rounded-full">SaaS</span>
+					<span class="px-3 py-1 bg-slate-800/50 rounded-full">Compliance</span>
+					<span class="px-3 py-1 bg-slate-800/50 rounded-full">IA</span>
+				</div>
+			</div>
+		</header>
+
+		<!-- Cards Section -->
+		<main class="flex-grow bg-slate-50 py-16">
+			<div class="max-w-5xl mx-auto px-6">
+				<h2 class="text-2xl font-bold text-slate-800 mb-8 text-center">Investigaciones Disponibles</h2>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+					
+					<!-- Card 1: Análisis RRHH -->
+					<a href="/analisis-rrhh" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300">
+						<div class="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-3 mb-4">
+								<span class="text-3xl">📊</span>
+								<h3 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
+									Estrategia de Capital Humano
+								</h3>
+							</div>
+							<p class="text-slate-600 text-sm mb-4">
+								De la Función Administrativa a la Resolución de Problemas Complejos. Análisis basado en datos de SENCE, Red de RRHH y Portal Innova.
+							</p>
+							<ul class="text-xs text-slate-500 space-y-1 mb-4">
+								<li>• Diagnóstico de PYMES chilenas</li>
+								<li>• Los 7 Desafíos del Modelo SENCE</li>
+								<li>• KPIs y herramientas recomendadas</li>
+							</ul>
+							<div class="flex items-center text-indigo-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
+								Ver análisis completo
+								<span class="ml-2">→</span>
+							</div>
+						</div>
+					</a>
+
+					<!-- Card 2: Análisis Herramientas -->
+					<a href="/analisis-herramientas" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-orange-200 transition-all duration-300">
+						<div class="h-2 bg-gradient-to-r from-orange-500 to-amber-500"></div>
+						<div class="p-6">
+							<div class="flex items-center gap-3 mb-4">
+								<span class="text-3xl">🛠️</span>
+								<h3 class="text-xl font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
+									Análisis de Herramientas RRHH
+								</h3>
+							</div>
+							<p class="text-slate-600 text-sm mb-4">
+								Comparativa técnica y funcional de Buk, Talana y Webdox. Evaluación de compliance, gestión dura/blanda e integración de IA.
+							</p>
+							<ul class="text-xs text-slate-500 space-y-1 mb-4">
+								<li>• Dashboard y estado del arte</li>
+								<li>• Radar de cobertura funcional</li>
+								<li>• Matriz de funcionalidades técnicas</li>
+							</ul>
+							<div class="flex items-center text-orange-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
+								Ver análisis completo
+								<span class="ml-2">→</span>
+							</div>
+						</div>
+					</a>
+
+				</div>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="bg-slate-900 text-slate-400 py-8">
+			<div class="max-w-5xl mx-auto px-6 text-center">
+				<p class="text-sm">Deep Research - Análisis para PYMES (50-200 empleados)</p>
+				<p class="text-xs mt-2 text-slate-600">Datos basados en fuentes públicas: SENCE, Red de RRHH, Portal Innova, Buk, Talana, Webdox.</p>
+			</div>
+		</footer>
+	</div>
+</Layout>

@@ -1,0 +1,270 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Estrategia de Capital Humano en Chile">
+    <link slot="head" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <div class="max-w-5xl mx-auto p-8 bg-slate-50 font-sans text-slate-900">
+      
+        <!-- Header -->
+        <header class="mb-10 border-b-4 border-indigo-600 pb-6">
+            <div class="flex justify-between items-start mb-4">
+                <a href="/" class="text-sm text-indigo-600 hover:text-indigo-800 transition">&larr; Volver al inicio</a>
+            </div>
+            <h1 class="text-4xl font-black tracking-tight text-slate-900 mb-2">
+                ESTRATEGIA DE CAPITAL HUMANO EN CHILE
+            </h1>
+            <p class="text-xl text-slate-600 font-light">
+                De la Función Administrativa a la Resolución de Problemas Complejos
+            </p>
+            <div class="mt-4 flex gap-2 text-xs font-mono text-slate-500">
+                <span>DATA: MANUAL SENCE + RED RRHH + PORTAL INNOVA</span>
+                <span>|</span>
+                <span>OBJETIVO: VISUALIZACIÓN CRÍTICA</span>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <div class="flex gap-2 mb-8 overflow-x-auto pb-2">
+            <button id="tab-diagnostico" class="tab-btn px-6 py-2 rounded-full font-bold text-sm transition-all bg-slate-900 text-white shadow-lg">
+                DIAGNOSTICO
+            </button>
+            <button id="tab-estrategia" class="tab-btn px-6 py-2 rounded-full font-bold text-sm transition-all bg-white text-slate-600 hover:bg-slate-200">
+                ESTRATEGIA
+            </button>
+            <button id="tab-herramientas" class="tab-btn px-6 py-2 rounded-full font-bold text-sm transition-all bg-white text-slate-600 hover:bg-slate-200">
+                HERRAMIENTAS
+            </button>
+        </div>
+
+        <!-- Content: Diagnóstico -->
+        <div id="content-diagnostico" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+            
+            <!-- Card 1: La Realidad PYME -->
+            <div class="bg-amber-50 border border-amber-100 p-6 rounded-lg shadow-sm">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                    <span class="text-amber-500 text-xl">⚠</span> La Realidad PYME
+                </h3>
+                <p class="text-sm text-slate-700 mb-4">
+                    Las PYMES chilenas operan en modo "apaga-incendios". RRHH es visto como burocracia, no como estrategia.
+                </p>
+                
+                <div class="mb-4">
+                    <div class="text-3xl font-black text-indigo-600">6 de 10</div>
+                    <div class="text-sm font-medium text-slate-700 leading-tight">Empresas con dificultades para encontrar talento calificado.</div>
+                    <div class="text-xs text-slate-400 mt-1 italic">Fuente: Portal Innova</div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-3xl font-black text-indigo-600">Admin vs Estrategia</div>
+                    <div class="text-sm font-medium text-slate-700 leading-tight">El error #1 es enfocar RRHH solo en nómina y contratos.</div>
+                    <div class="text-xs text-slate-400 mt-1 italic">Fuente: Faro Talento</div>
+                </div>
+            </div>
+
+            <!-- Card 2: Costos Ocultos -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                    <span class="text-red-500 text-xl">📈</span> Costos Ocultos
+                </h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex gap-2 items-start">
+                        <span class="text-red-500 font-bold">•</span>
+                        <span><strong>Alta Rotación:</strong> Pérdida de conocimiento tácito y costos de re-entrenamiento.</span>
+                    </li>
+                    <li class="flex gap-2 items-start">
+                        <span class="text-red-500 font-bold">•</span>
+                        <span><strong>Ausentismo:</strong> Síntoma de clima laboral tóxico o mala gestión.</span>
+                    </li>
+                    <li class="flex gap-2 items-start">
+                        <span class="text-red-500 font-bold">•</span>
+                        <span><strong>Fuga de Talento:</strong> 60% de escasez técnica compensada precariamente.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 3: Parálisis Digital -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                    <span class="text-indigo-500 text-xl">🧠</span> Parálisis Digital
+                </h3>
+                <p class="text-sm mb-4">
+                    La falta de datos impide la toma de decisiones basada en evidencia (First Principles).
+                </p>
+                <div class="p-4 bg-indigo-50 rounded border border-indigo-100">
+                    <h4 class="font-bold text-indigo-900 text-sm mb-1">El sesgo cognitivo:</h4>
+                    <p class="text-xs text-indigo-800">
+                        "Siempre lo hemos hecho así". La resistencia al cambio cultural frena la adopción de software (Talana, Buk) que automatiza el 80% de la carga operativa.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content: Estrategia -->
+        <div id="content-estrategia" class="tab-content hidden grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in">
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                        <span class="text-emerald-600 text-xl">🎯</span> Los 7 Desafíos (Modelo SENCE)
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">1. Participación Laboral</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">👥</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">2. Visibilidad Estratégica</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">🔍</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">3. Relaciones Laborales</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">💼</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">4. Diversidad e Inclusión</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">👥</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">5. Gestión del Talento</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">🎯</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">6. Formación Continua (Upskilling)</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">📚</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded hover:bg-emerald-50 transition-colors cursor-default group">
+                            <span class="font-bold text-sm text-slate-700 group-hover:text-emerald-700">7. Gestión del Cambio</span>
+                            <span class="text-slate-400 group-hover:text-emerald-600">📈</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                        <span class="text-blue-600 text-xl">🧠</span> Resolución de Problemas
+                    </h3>
+                    <p class="text-sm text-slate-500 mb-4 italic">
+                        Aplicando metodología "Problem Solving" a crisis sociales/organizacionales.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm">1</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Identificar</h4>
+                                <p class="text-sm text-slate-600">Reconocer el conflicto (ej. baja productividad) sin sesgos. Separar a la persona del problema.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm">2</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Analizar Causas</h4>
+                                <p class="text-sm text-slate-600">¿Es falta de capacitación (SENCE) o mal liderazgo? Usar datos, no intuición.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm">3</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Generar Soluciones</h4>
+                                <p class="text-sm text-slate-600">Brainstorming inclusivo. Considerar flexibilidad laboral y Employer Branding.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm">4</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">Implementar y Medir</h4>
+                                <p class="text-sm text-slate-600">Ejecutar cambios y medir impacto en KPIs (Retención, ROI).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content: Herramientas -->
+        <div id="content-herramientas" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 border-t-4 border-t-blue-500">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 uppercase tracking-tight">KPIs Esenciales</h3>
+                <ul class="text-sm space-y-2 text-slate-700">
+                    <li>• <strong>Rotación Voluntaria:</strong> ¿Por qué se van?</li>
+                    <li>• <strong>Tiempo de Vacante:</strong> Costo de oportunidad.</li>
+                    <li>• <strong>NPS Interno:</strong> Satisfacción del empleado.</li>
+                    <li>• <strong>Eficiencia de Capacitación:</strong> ROI de cursos SENCE.</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 border-t-4 border-t-indigo-500">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 uppercase tracking-tight">Tech Stack RRHH</h3>
+                <div class="space-y-3">
+                    <div class="bg-slate-100 p-2 rounded text-xs">
+                        <strong>Gestión Integral:</strong> Talana, Buk, Sesame.
+                    </div>
+                    <div class="bg-slate-100 p-2 rounded text-xs">
+                        <strong>Reclutamiento:</strong> LinkedIn, Portales de empleo con AI.
+                    </div>
+                    <div class="bg-slate-100 p-2 rounded text-xs">
+                        <strong>Clima:</strong> Encuestas de pulso automatizadas.
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 border-t-4 border-t-emerald-500">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 uppercase tracking-tight">Soft Skills Críticas</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">Escucha Activa</span>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">Liderazgo Situacional</span>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">Pensamiento Crítico</span>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">Negociación</span>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">Resiliencia</span>
+                </div>
+                <p class="mt-4 text-xs text-slate-500">
+                    Cruciales para "Humanizar" la gestión según RedActiva y Forbes.
+                </p>
+            </div>
+        </div>
+
+        <footer class="mt-12 pt-6 border-t border-slate-200 text-center text-xs text-slate-400">
+            <p>Generado por MR T0R0's Assistant | Fuentes: SENCE, Red de RRHH, Portal Innova, Forbes Chile, ExpokNews.</p>
+            <p class="mt-1">Concepto visual basado en principios de diseño atómico y claridad informativa.</p>
+        </footer>
+    </div>
+
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = ['diagnostico', 'estrategia', 'herramientas'];
+            
+            tabs.forEach(tab => {
+                document.getElementById(`tab-${tab}`).addEventListener('click', () => {
+                    // Update buttons
+                    tabs.forEach(t => {
+                        const btn = document.getElementById(`tab-${t}`);
+                        const content = document.getElementById(`content-${t}`);
+                        
+                        if (t === tab) {
+                            btn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-200');
+                            btn.classList.add('bg-slate-900', 'text-white', 'shadow-lg');
+                            content.classList.remove('hidden');
+                        } else {
+                            btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-200');
+                            btn.classList.remove('bg-slate-900', 'text-white', 'shadow-lg');
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</Layout>
