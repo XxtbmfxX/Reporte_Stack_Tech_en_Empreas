@@ -1,15 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
-import { getPdfUrl } from '../config/pdfs';
-
-const pdfUrl = getPdfUrl('arquitecturaEmpresaTi');
 ---
 
 <Layout title="Arquitectura de una Empresa TI">
   <PdfViewer 
     title="Arquitectura de una Empresa TI"
-    pdfUrl={pdfUrl}
+    pdfUrl="/pdfs/Arquitectura_de_una_Empresa_TI.pdf"
     color="purple"
   />
 </Layout>

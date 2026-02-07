@@ -1,15 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
-import { getPdfUrl } from '../config/pdfs';
-
-const pdfUrl = getPdfUrl('anatomiaDigitalPyme');
 ---
 
 <Layout title="Anatomía Digital PYME 2025">
   <PdfViewer 
     title="Anatomía Digital PYME 2025"
-    pdfUrl={pdfUrl}
+    pdfUrl="/pdfs/Anatomía_Digital_PYME_2025.pdf"
     color="indigo"
   />
 </Layout>
