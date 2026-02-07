@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('digitalOrchestration');
 ---
 
 <Layout title="Digital Orchestration Chile 2026">
   <PdfViewer 
     title="Digital Orchestration Chile 2026"
-    pdfUrl="/pdfs/Digital_Orchestration_Chile_2026.pdf"
+    pdfUrl={pdfUrl}
     color="blue"
   />
 </Layout>
