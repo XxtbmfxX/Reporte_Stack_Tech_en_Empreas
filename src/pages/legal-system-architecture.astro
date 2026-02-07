@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('legalSystemArchitecture');
 ---
 
 <Layout title="Legal System Architecture Chile">
   <PdfViewer 
     title="Legal System Architecture Chile"
-    pdfUrl="/pdfs/Legal_System_Architecture_Chile.pdf"
+    pdfUrl={pdfUrl}
     color="rose"
   />
 </Layout>

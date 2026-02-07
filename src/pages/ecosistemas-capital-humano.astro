@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('ecosistemasCapitalHumano');
 ---
 
 <Layout title="Ecosistemas de Capital Humano - Análisis Estratégico">
   <PdfViewer 
     title="Ecosistemas de Capital Humano - Análisis Estratégico"
-    pdfUrl="/pdfs/Ecosistemas_de_Capital_Humano_Análisis_Estratégico.pdf"
+    pdfUrl={pdfUrl}
     color="emerald"
   />
 </Layout>

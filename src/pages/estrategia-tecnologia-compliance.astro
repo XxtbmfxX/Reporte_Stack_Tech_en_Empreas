@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('estrategiaTecnologiaCompliance');
 ---
 
 <Layout title="Estrategia, Tecnología y Compliance">
   <PdfViewer 
     title="Estrategia, Tecnología y Compliance"
-    pdfUrl="/pdfs/Estrategia_Tecnología_Compliance.pdf"
+    pdfUrl={pdfUrl}
     color="orange"
   />
 </Layout>

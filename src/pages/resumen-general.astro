@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('resumenGeneral');
 ---
 
 <Layout title="Resumen General">
   <PdfViewer 
     title="Resumen General de Investigaciones"
-    pdfUrl="/pdfs/ResumenGeneral1.pdf"
+    pdfUrl={pdfUrl}
     color="amber"
   />
 </Layout>

@@ -19,6 +19,7 @@ lerna-debug.log*
 .env.local
 .env.*.local
 .env.production
+.env.development
 
 # macOS-specific files
 .DS_Store
@@ -50,3 +51,16 @@ coverage/
 # Temporary files
 *.tmp
 *.bak
+*.log
+
+# IDE cache/temp
+.cache
+.DS_Store/
+
+# Node version managers
+.nvmrc
+.node-version
+
+# Package manager lockfiles (optional, uncomment if needed)
+# pnpm-lock.yaml
+# yarn.lock
