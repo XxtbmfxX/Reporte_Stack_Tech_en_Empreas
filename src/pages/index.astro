@@ -1,118 +1,148 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const investigaciones = [
+	{
+		title: "Resumen General",
+		description: "Visión consolidada de todas las investigaciones realizadas sobre tecnología, capital humano y compliance para PYMES.",
+		href: "/resumen-general",
+		icon: "📋",
+		color: "amber",
+		tags: ["Resumen", "Overview"]
+	},
+	{
+		title: "Anatomía Digital PYME 2025",
+		description: "Radiografía completa del estado digital de las PYMES chilenas. Madurez tecnológica, brechas y oportunidades.",
+		href: "/anatomia-digital-pyme",
+		icon: "🔬",
+		color: "indigo",
+		tags: ["PYME", "Digital", "2025"]
+	},
+	{
+		title: "Arquitectura de una Empresa TI",
+		description: "Diseño arquitectónico de sistemas empresariales. Stack tecnológico, integraciones y mejores prácticas.",
+		href: "/arquitectura-empresa-ti",
+		icon: "🏗️",
+		color: "purple",
+		tags: ["Arquitectura", "TI", "Sistemas"]
+	},
+	{
+		title: "Digital Orchestration Chile 2026",
+		description: "Tendencias de orquestación digital para el mercado chileno. Automatización, workflows y procesos integrados.",
+		href: "/digital-orchestration",
+		icon: "🎯",
+		color: "blue",
+		tags: ["Orquestación", "2026", "Chile"]
+	},
+	{
+		title: "Ecosistemas de Capital Humano",
+		description: "Análisis estratégico de la gestión de personas. Ecosistemas, tendencias y herramientas de RRHH.",
+		href: "/ecosistemas-capital-humano",
+		icon: "👥",
+		color: "emerald",
+		tags: ["RRHH", "Capital Humano", "Estrategia"]
+	},
+	{
+		title: "Estrategia, Tecnología y Compliance",
+		description: "Convergencia entre estrategia de negocio, adopción tecnológica y cumplimiento normativo en Chile.",
+		href: "/estrategia-tecnologia-compliance",
+		icon: "⚖️",
+		color: "orange",
+		tags: ["Compliance", "Estrategia", "Legal"]
+	},
+	{
+		title: "Legal System Architecture Chile",
+		description: "Marco legal y regulatorio para empresas tecnológicas en Chile. Normativas, obligaciones y buenas prácticas.",
+		href: "/legal-system-architecture",
+		icon: "📜",
+		color: "rose",
+		tags: ["Legal", "Normativa", "Chile"]
+	}
+];
+
+const colorClasses: Record<string, { gradient: string; hover: string; text: string }> = {
+	indigo: { gradient: "from-indigo-500 to-indigo-600", hover: "hover:border-indigo-300", text: "text-indigo-600" },
+	orange: { gradient: "from-orange-500 to-orange-600", hover: "hover:border-orange-300", text: "text-orange-600" },
+	blue: { gradient: "from-blue-500 to-blue-600", hover: "hover:border-blue-300", text: "text-blue-600" },
+	purple: { gradient: "from-purple-500 to-purple-600", hover: "hover:border-purple-300", text: "text-purple-600" },
+	emerald: { gradient: "from-emerald-500 to-emerald-600", hover: "hover:border-emerald-300", text: "text-emerald-600" },
+	rose: { gradient: "from-rose-500 to-rose-600", hover: "hover:border-rose-300", text: "text-rose-600" },
+	amber: { gradient: "from-amber-500 to-amber-600", hover: "hover:border-amber-300", text: "text-amber-600" },
+};
 ---
 
-<Layout title="Deep Research - Análisis de RRHH y Herramientas">
+<Layout title="Deep Research - Investigaciones Tecnológicas para PYMES">
 	<div class="min-h-screen flex flex-col">
 		<!-- Hero Section -->
-		<header class="bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900 text-white py-20">
-			<div class="max-w-5xl mx-auto px-6 text-center">
+		<header class="bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900 text-white py-16 md:py-20">
+			<div class="max-w-6xl mx-auto px-6 text-center">
 				<h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">
 					Deep Research
 				</h1>
 				<p class="text-xl text-slate-300 font-light max-w-2xl mx-auto">
-					Análisis estratégico de Capital Humano y herramientas tecnológicas para PYMES en Chile
+					Investigaciones estratégicas sobre tecnología, capital humano y compliance para PYMES en Chile
 				</p>
-				<div class="mt-6 flex justify-center gap-2 text-xs font-mono text-slate-400">
+				<div class="mt-6 flex flex-wrap justify-center gap-2 text-xs font-mono text-slate-400">
 					<span class="px-3 py-1 bg-slate-800/50 rounded-full">RRHH</span>
 					<span class="px-3 py-1 bg-slate-800/50 rounded-full">SaaS</span>
 					<span class="px-3 py-1 bg-slate-800/50 rounded-full">Compliance</span>
 					<span class="px-3 py-1 bg-slate-800/50 rounded-full">IA</span>
+					<span class="px-3 py-1 bg-slate-800/50 rounded-full">Legal</span>
 				</div>
 			</div>
 		</header>
 
 		<!-- Cards Section -->
-		<main class="grow bg-slate-50 py-16">
-			<div class="max-w-5xl mx-auto px-6">
-				<h2 class="text-2xl font-bold text-slate-800 mb-8 text-center">Investigaciones Disponibles</h2>
+		<main class="grow bg-slate-50 py-12 md:py-16">
+			<div class="max-w-6xl mx-auto px-6">
+				<h2 class="text-2xl font-bold text-slate-800 mb-2 text-center">Investigaciones Disponibles</h2>
+				<p class="text-slate-500 text-center mb-10">Haz clic en cualquier tarjeta para ver el documento completo</p>
 				
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					
-					<!-- Card 1: Análisis RRHH -->
-					<a href="/analisis-rrhh" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300">
-						<div class="h-2 bg-linear-to-r from-indigo-500 to-purple-500"></div>
-						<div class="p-6">
-							<div class="flex items-center gap-3 mb-4">
-								<span class="text-3xl" aria-hidden="true">📊</span>
-								<h3 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
-									Estrategia de Capital Humano
-								</h3>
-							</div>
-							<p class="text-slate-600 text-sm mb-4">
-								De la Función Administrativa a la Resolución de Problemas Complejos. Análisis basado en datos de SENCE, Red de RRHH y Portal Innova.
-							</p>
-							<ul class="text-xs text-slate-500 space-y-1 mb-4">
-								<li>• Diagnóstico de PYMES chilenas</li>
-								<li>• Los 7 Desafíos del Modelo SENCE</li>
-								<li>• KPIs y herramientas recomendadas</li>
-							</ul>
-							<div class="flex items-center text-indigo-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
-								Ver análisis completo
-								<span class="ml-2" aria-hidden="true">→</span>
-							</div>
-						</div>
-					</a>
-
-					<!-- Card 2: Análisis Herramientas -->
-					<a href="/analisis-herramientas" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-orange-200 transition-all duration-300">
-						<div class="h-2 bg-linear-to-r from-orange-500 to-amber-500"></div>
-						<div class="p-6">
-							<div class="flex items-center gap-3 mb-4">
-								<span class="text-3xl" aria-hidden="true">🛠️</span>
-								<h3 class="text-xl font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-									Análisis de Herramientas RRHH
-								</h3>
-							</div>
-							<p class="text-slate-600 text-sm mb-4">
-								Comparativa técnica y funcional de Buk, Talana y Webdox. Evaluación de compliance, gestión dura/blanda e integración de IA.
-							</p>
-							<ul class="text-xs text-slate-500 space-y-1 mb-4">
-								<li>• Dashboard y estado del arte</li>
-								<li>• Radar de cobertura funcional</li>
-								<li>• Matriz de funcionalidades técnicas</li>
-							</ul>
-							<div class="flex items-center text-orange-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
-								Ver análisis completo
-								<span class="ml-2" aria-hidden="true">→</span>
-							</div>
-						</div>
-					</a>
-
-					<!-- Card 3: Análisis Soluciones Tecnológicas -->
-					<a href="/analisis-soluciones" class="group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all duration-300">
-						<div class="h-2 bg-linear-to-r from-blue-500 to-cyan-500"></div>
-						<div class="p-6">
-							<div class="flex items-center gap-3 mb-4">
-								<span class="text-3xl" aria-hidden="true">💡</span>
-								<h3 class="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
-									Soluciones Tecnológicas 2026
-								</h3>
-							</div>
-							<p class="text-slate-600 text-sm mb-4">
-								Marcos de Entendimiento, Automatización Agéntica y Compliance Estratégico para decisiones tecnológicas.
-							</p>
-							<ul class="text-xs text-slate-500 space-y-1 mb-4">
-								<li>• Build vs Buy y TCO</li>
-								<li>• IA y Automatización por área</li>
-								<li>• Compliance y regulación laboral</li>
-							</ul>
-							<div class="flex items-center text-blue-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
-								Ver análisis completo
-								<span class="ml-2" aria-hidden="true">→</span>
-							</div>
-						</div>
-					</a>
-
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+					{investigaciones.map((inv) => {
+						const colors = colorClasses[inv.color];
+						return (
+							<a 
+								href={inv.href} 
+								class={`group block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg ${colors.hover} transition-all duration-300`}
+							>
+								<div class={`h-2 bg-linear-to-r ${colors.gradient}`}></div>
+								<div class="p-6">
+									<div class="flex items-start gap-3 mb-3">
+										<span class="text-3xl flex-shrink-0" aria-hidden="true">{inv.icon}</span>
+										<h3 class={`text-lg font-bold text-slate-800 group-hover:${colors.text} transition-colors leading-tight`}>
+											{inv.title}
+										</h3>
+									</div>
+									<p class="text-slate-600 text-sm mb-4 line-clamp-3">
+										{inv.description}
+									</p>
+									<div class="flex flex-wrap gap-1 mb-4">
+										{inv.tags.map((tag) => (
+											<span class="text-xs px-2 py-0.5 bg-slate-100 text-slate-500 rounded-full">
+												{tag}
+											</span>
+										))}
+									</div>
+									<div class={`flex items-center ${colors.text} text-sm font-semibold group-hover:translate-x-1 transition-transform`}>
+										Ver documento
+										<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+										</svg>
+									</div>
+								</div>
+							</a>
+						);
+					})}
 				</div>
 			</div>
 		</main>
 
 		<!-- Footer -->
 		<footer class="bg-slate-900 text-slate-400 py-8">
-			<div class="max-w-5xl mx-auto px-6 text-center">
+			<div class="max-w-6xl mx-auto px-6 text-center">
 				<p class="text-sm">Deep Research - Análisis para PYMES (50-200 empleados)</p>
-				<p class="text-xs mt-2 text-slate-600">Datos basados en fuentes públicas: SENCE, Red de RRHH, Portal Innova, Buk, Talana, Webdox.</p>
+				<p class="text-xs mt-2 text-slate-600">Documentos de investigación en formato PDF embedido</p>
 			</div>
 		</footer>
 	</div>
