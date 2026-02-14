@@ -1,0 +1,337 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Define color mappings
+const colorMap = {
+  blue: 'text-blue-600',
+  yellow: 'text-yellow-500',
+  purple: 'text-purple-600',
+  emerald: 'text-emerald-600'
+};
+
+const bgColorMap = {
+  blue: 'bg-blue-50',
+  yellow: 'bg-yellow-50',
+  purple: 'bg-purple-50',
+  emerald: 'bg-emerald-50',
+  red: 'bg-red-50'
+};
+
+const borderColorMap = {
+  blue: '#3b82f6',
+  yellow: '#eab308',
+  purple: '#9333ea',
+  emerald: '#059669',
+  red: '#f87171'
+};
+
+interface Opportunity {
+  title: string;
+  focus: string;
+  highlight: string;
+  link: string;
+  linkText: string;
+  borderColor: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  items: Opportunity[];
+}
+
+const marketplaces: Opportunity[] = [
+  {
+    title: 'WhereEx',
+    focus: 'Multirubro (Minería, Retail, Alimentos).',
+    highlight: 'Alta visibilidad de necesidades transaccionales y servicios TI recurrentes.',
+    link: 'https://wherex.cl/quiero-ser-proveedor/',
+    linkText: 'Postular como proveedor',
+    borderColor: 'blue'
+  },
+  {
+    title: 'Senegocia',
+    focus: 'Retail, Manufactura y Servicios.',
+    highlight: 'Ideal para identificar brechas en cadena de suministro y logística.',
+    link: 'https://cl.senegocia.com/hazte-proveedor/',
+    linkText: 'Hazte proveedor',
+    borderColor: 'blue'
+  },
+  {
+    title: 'Artikos',
+    focus: 'Sector Financiero y Grandes Corporativos.',
+    highlight: 'Foco en servicios de alta criticidad y cumplimiento (compliance).',
+    link: 'https://artikos.cl/',
+    linkText: 'Visitar portal',
+    borderColor: 'blue'
+  }
+];
+
+const innovation: Opportunity[] = [
+  {
+    title: 'Expande Minería',
+    focus: 'Minería de alta complejidad.',
+    highlight: 'El mejor lugar para hallar problemas reales. Desafíos técnicos no resueltos.',
+    link: 'https://expandemineria.cl/desafios/',
+    linkText: 'Ver desafíos activos',
+    borderColor: 'yellow'
+  },
+  {
+    title: 'Know Hub Chile',
+    focus: 'Transferencia tecnológica.',
+    highlight: 'Problemas que requieren ciencia de datos o desarrollo profundo.',
+    link: 'https://knowhub.cl/',
+    linkText: 'Saber más',
+    borderColor: 'yellow'
+  },
+  {
+    title: 'HubTec',
+    focus: 'Vínculo industria-academia.',
+    highlight: 'Acceso a problemas de sectores como agroindustria y salud.',
+    link: 'https://www.hubtec.cl/',
+    linkText: 'Explorar',
+    borderColor: 'yellow'
+  }
+];
+
+const directPortals: Opportunity[] = [
+  {
+    title: 'Portal Proveedores GTD',
+    focus: 'Telecomunicaciones e Infraestructura.',
+    highlight: 'Entender requerimientos de hardware, conectividad y ciberseguridad.',
+    link: 'https://www.gtd.cl/nuestra-empresa/quieres-ser-proveedor',
+    linkText: 'Registro directo',
+    borderColor: 'purple'
+  }
+];
+
+const networkingHubs: Opportunity[] = [
+  {
+    title: 'Endeavor Chile',
+    focus: 'Scale-ups y emprendimiento.',
+    highlight: 'Networking para identificar problemas de escalabilidad.',
+    link: 'https://endeavor.cl/',
+    linkText: 'Networking',
+    borderColor: 'emerald'
+  },
+  {
+    title: 'Chiletec',
+    focus: 'Gremio de empresas tecnológicas.',
+    highlight: 'Market intelligence sobre brechas de talento y regulaciones.',
+    link: 'https://chiletec.org/',
+    linkText: 'Gremio',
+    borderColor: 'emerald'
+  }
+];
+
+const sections: Section[] = [
+  {
+    title: 'Marketplaces B2B (Licitaciones)',
+    icon: 'fa-cart-shopping',
+    color: 'blue',
+    items: marketplaces
+  },
+  {
+    title: 'Innovación Abierta',
+    icon: 'fa-lightbulb',
+    color: 'yellow',
+    items: innovation
+  },
+  {
+    title: 'Portales Directos',
+    icon: 'fa-building',
+    color: 'purple',
+    items: directPortals
+  },
+  {
+    title: 'Redes de Inteligencia',
+    icon: 'fa-network-wired',
+    color: 'emerald',
+    items: networkingHubs
+  }
+];
+
+const specialCards = [
+  {
+    title: 'SICEP',
+    focus: 'Registro de proveedores mineros.',
+    highlight: 'Estándar para entrar a la minería; permite ver qué exigen las mandantes.',
+    isBadged: true,
+    badgeText: 'UI Deficiente',
+    links: [
+      { text: 'SICEP', url: 'https://www.sicep.cl/' },
+      { text: 'Exponor', url: 'https://exponor.cl/' }
+    ]
+  }
+];
+
+const innovationHubs = [
+  { name: 'Fundación Chile', url: 'https://fch.cl' },
+  { name: 'OpenBeauchef', url: 'https://openbeauchef.cl' },
+  { name: 'ChileGlobal Ventures', url: 'https://chileglobalventures.cl/convocatorias/' }
+];
+---
+
+<Layout title="Ecosistema Tech - Oportunidades B2B">
+  <link slot="head" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    
+    :global(body) {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .card-shadow {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .accent-border {
+      border-left: 4px solid #3b82f6;
+    }
+
+    .accent-border.yellow {
+      border-left-color: #eab308;
+    }
+
+    .accent-border.purple {
+      border-left-color: #9333ea;
+    }
+
+    .accent-border.emerald {
+      border-left-color: #059669;
+    }
+
+    .accent-border.red {
+      border-left-color: #f87171;
+    }
+  </style>
+
+  <div class="min-h-screen flex flex-col bg-slate-50">
+    <!-- Header Navigation -->
+    <header class="bg-white border-b-4 border-cyan-600 shadow-sm sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3 sm:gap-4">
+            <a 
+              href="/" 
+              class="text-cyan-600 hover:opacity-80 transition flex items-center gap-2 text-sm font-medium"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              <span class="hidden sm:inline">Volver</span>
+              <span class="sm:hidden">Inicio</span>
+            </a>
+            <div class="w-px h-6 bg-slate-300"></div>
+            <h1 class="text-base sm:text-lg md:text-xl font-bold text-slate-800 truncate">
+              Ecosistema de Oportunidades Tech
+            </h1>
+          </div>
+          <span class="text-2xl hidden sm:block">🌐</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
+    <!-- Header & Core Insight -->
+    <header class="mb-12 sm:mb-16 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 mb-4 sm:mb-6">
+        Ecosistema de Oportunidades Tech
+      </h2>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-r-lg inline-block text-left max-w-2xl mx-auto w-full">
+        <div class="flex items-start">
+          <span class="text-xl sm:text-2xl mr-3 sm:mr-4 flex-shrink-0">💡</span>
+          <p class="text-blue-800 text-base sm:text-lg font-medium italic">
+            "Las empresas grandes ponen la infraestructura y el partner pone el software especializado."
+          </p>
+        </div>
+      </div>
+      <p class="mt-6 sm:mt-8 text-slate-500 uppercase tracking-widest text-xs sm:text-sm font-semibold">
+        Referentes: GTD · Entel Ocean · Movistar
+      </p>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+      {sections.map((section) => (
+        <section class="space-y-4 sm:space-y-6">
+          <h2 class="text-xl sm:text-2xl font-bold flex items-center text-slate-800">
+            <i class={`fa-solid ${section.icon} mr-2 sm:mr-3 text-base sm:text-lg ${colorMap[section.color as keyof typeof colorMap]}`}></i>
+            <span class="leading-tight">{section.title}</span>
+          </h2>
+
+          {section.items.map((item) => (
+            <div class="bg-white p-4 sm:p-6 rounded-xl card-shadow accent-border" style={`border-left-color: ${borderColorMap[section.color as keyof typeof borderColorMap]}`}>
+              <h3 class="text-lg sm:text-xl font-bold mb-2">{item.title}</h3>
+              <p class="text-sm text-slate-600 mb-3">
+                <span class="font-semibold text-slate-800">Enfoque:</span> {item.focus}
+              </p>
+              <p class={`text-xs sm:text-sm p-3 rounded mb-4 italic text-slate-700 ${bgColorMap[section.color as keyof typeof bgColorMap]}`}>
+                <strong>Potencial Tech:</strong> {item.highlight}
+              </p>
+              <a href={item.link} target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold hover:underline flex items-center text-sm sm:text-base">
+                {item.linkText}
+                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+              </a>
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+
+    <!-- Special Cards Section -->
+    <div class="mt-6 sm:mt-8 grid grid-cols-1 gap-6 sm:gap-8">
+      {specialCards.map((card) => (
+        <div class="bg-white p-4 sm:p-6 rounded-xl card-shadow accent-border" style="border-left-color: #f87171">
+          <h3 class="text-lg sm:text-xl font-bold mb-2 flex items-center flex-wrap gap-2">
+            <span>{card.title}</span>
+            {card.isBadged && (
+              <span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-bold rounded">
+                {card.badgeText}
+              </span>
+            )}
+          </h3>
+          <p class="text-sm text-slate-600 mb-3">
+            <span class="font-semibold text-slate-800">Enfoque:</span> {card.focus}
+          </p>
+          <p class="text-xs sm:text-sm bg-red-50 p-3 rounded mb-4 italic text-slate-700">
+            <strong>Potencial Tech:</strong> {card.highlight}
+          </p>
+          {card.links && (
+            <div class="flex flex-wrap gap-3 sm:gap-4">
+              {card.links.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-blue-600 font-semibold hover:underline text-sm">
+                  {link.text}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Footer Hubs -->
+    <footer class="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-200">
+      <h2 class="text-center text-lg sm:text-xl font-bold mb-6 sm:mb-8">Hubs de Innovación & Ventures</h2>
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-6">
+        {innovationHubs.map((hub) => (
+          <a 
+            href={hub.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class={hub.name === 'ChileGlobal Ventures' 
+              ? 'bg-slate-900 text-white hover:bg-slate-800 px-4 sm:px-6 py-2 rounded-full font-medium transition-colors text-sm sm:text-base text-center'
+              : 'bg-slate-200 hover:bg-slate-300 px-4 sm:px-6 py-2 rounded-full font-medium transition-colors text-sm sm:text-base text-center'
+            }
+          >
+            {hub.name}
+          </a>
+        ))}
+      </div>
+    </footer>
+  </div>
+  </div>
+</Layout>
