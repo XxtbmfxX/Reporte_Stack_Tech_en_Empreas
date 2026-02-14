@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('entendiendoMercadoPublico');
+---
+
+<Layout title="Entendiendo el Mercado Público">
+  <PdfViewer 
+    title="Entendiendo el Mercado Público"
+    pdfUrl={pdfUrl}
+    color="teal"
+  />
+</Layout>

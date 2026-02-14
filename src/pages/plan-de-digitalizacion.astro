@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PdfViewer from '../components/PdfViewer.astro';
+import { getPdfUrl } from '../config/pdfs';
+
+const pdfUrl = getPdfUrl('planDeDigitalizacion');
+---
+
+<Layout title="Plan de Digitalización">
+  <PdfViewer 
+    title="Plan de Digitalización"
+    pdfUrl={pdfUrl}
+    color="green"
+  />
+</Layout>

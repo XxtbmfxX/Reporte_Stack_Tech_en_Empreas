@@ -17,6 +17,8 @@ export const PDF_FILES = {
   estrategiaTecnologiaCompliance: "Estrategia_Tecnología_Compliance.pdf",
   legalSystemArchitecture: "Legal_System_Architecture_Chile.pdf",
   resumenGeneral: "ResumenGeneral1.pdf",
+  entendiendoMercadoPublico: "Entendiendo_Mercado_Publico_optimizado.pdf",
+  planDeDigitalizacion: "Plan-de-Digitalizacion_optimizado.pdf",
 } as const;
 
 export type PdfKey = keyof typeof PDF_FILES;
